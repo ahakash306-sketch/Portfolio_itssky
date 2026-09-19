@@ -1,0 +1,50 @@
+/* Additive homepage refinement: original copy, images and palette retained. */
+html { scroll-padding-top: 0; }
+html .shell { width: min(1280px, calc(100% - clamp(32px, 8vw, 160px))) !important; }
+html .shell > section { scroll-margin-top: var(--sky-header-height, 84px); }
+html .shell :is(a, button):focus-visible { outline: 2px solid #f2f0ed; outline-offset: 5px; border-radius: 4px; }
+html .shell > header { padding-block: 12px !important; }
+html .shell > header > div { flex-wrap: wrap; justify-content: flex-end; min-width: 0; }
+html .shell > header a { position: relative; display: inline-flex; align-items: center; min-height: 44px; transition: color .2s; }
+html .shell > header a::after { content: ''; position: absolute; inset: auto 0 6px; height: 1px; background: currentColor; transform: scaleX(0); transform-origin: left; transition: transform .22s ease; }
+html .shell > header a:is(:hover, :focus-visible, [aria-current="location"]) { color: #f2f0ed !important; }
+html .shell > header a:is(:hover, :focus-visible, [aria-current="location"])::after { transform: scaleX(1); }
+html .shell > header button { width: 44px !important; height: 44px !important; flex: none; }
+html .shell #top { min-height: min(780px, calc(100svh - 72px)) !important; }
+html .shell #top h1 { font-size: clamp(26px, 2.9vw, 42px) !important; }
+.work-grid a { min-width: 0; transition: transform .25s ease, border-color .25s ease, background .25s ease !important; }
+.work-grid a > span { min-width: 0; }
+.work-grid a img { transition: transform .45s cubic-bezier(.2,.7,.2,1); }
+.work-grid a:focus-visible { border-color: #a8a49c !important; }
+#contact a { min-height: 48px; }
+#contact a > span:last-child { transition: transform .2s ease, color .2s ease; }
+#contact a:is(:hover, :focus-visible) > span:last-child { transform: translate(3px,-2px); color: #f2f0ed !important; }
+#about button, #about a { min-height: 44px; display: inline-flex; align-items: center; }
+.sky-journey { max-height: calc(100dvh - 32px) !important; overscroll-behavior: contain; }
+.sky-journey button { min-width: 44px; min-height: 44px; }
+@media (hover: hover) and (pointer: fine) {
+  .work-grid a:not([aria-disabled="true"]):hover { transform: translateY(-4px); border-color: #55524c !important; }
+  .work-grid a:not([aria-disabled="true"]):hover img { transform: scale(1.025); }
+}
+@media (max-width: 900px) {
+  html .shell { width: calc(100% - 40px) !important; }
+  html .shell #top { min-height: auto !important; padding-block: 40px 64px !important; }
+  .cap-grid { grid-template-columns: minmax(0,1fr) !important; }
+  .cap-grid > div:first-child { position: static !important; }
+}
+@media (max-width: 600px) {
+  html .shell { width: calc(100% - 32px) !important; }
+  html .shell > header { justify-content: center !important; }
+  html .shell > header > div { width: 100%; justify-content: space-between; gap: 4px 10px !important; }
+  html .shell > header a { font-size: 11px !important; letter-spacing: .045em; }
+  html .shell #top h1 { font-size: clamp(23px, 5.9vw, 32px) !important; }
+  html .shell #top h1 > span { min-width: 0; }
+  .work-grid { grid-template-columns: minmax(0,1fr) !important; gap: 24px !important; }
+  .work-grid a { padding: 10px 10px 20px !important; }
+  #work > div:first-child { flex-wrap: wrap; gap: 10px; }
+  html .shell > section { padding-block: 56px !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html .shell *, html .shell *::before, html .shell *::after { animation-duration: .01ms !important; animation-delay: 0ms !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+  html .shell section[data-screen-label] > div { transform: none !important; }
+}
