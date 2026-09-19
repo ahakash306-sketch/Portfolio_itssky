@@ -800,7 +800,7 @@ const CASE_ORDER = ["kriyam", "proteger", "goodbook", "buseit", "workspace"];
 /* Case studies are static pages under /works/<id>/. A project added in the admin
    panel has no page yet, so its card stays inert rather than linking to a 404. */
 const CASE_PAGES = ["kriyam", "proteger", "goodbook", "buseit", "workspace"];
-const pageFor = (id) => window.CMS ? window.CMS.pageFor(id) : (CASE_PAGES.indexOf(id) > -1 ? "/works/" + id + "/" : "");
+const pageFor = (id) => window.CMS ? window.CMS.pageFor(id) : (CASE_PAGES.indexOf(id) > -1 ? new URL("works/" + id + "/", document.baseURI).href : "");
 
 class Component extends DCLogic {
   state = { journeyOpen: false, spray: false, view: null, open: null, expanded: false, showAllWorks: false };
@@ -836,7 +836,7 @@ class Component extends DCLogic {
   /* Case studies are their own pages now; old #/works/<slug> links forward to them. */
   syncRoute = () => {
     const id = idFromRoute(location.hash);
-    if (id) { location.replace("/works/" + id + "/"); return; }
+    if (id) { location.replace(pageFor(id)); return; }
     if (window.CMS) window.CMS.setPage("home");
     this.applyCaseAccent(null);
   };
@@ -955,7 +955,7 @@ scanVideos() {
     document.head.appendChild(el);
   }
 
-  openCase(id) { location.href = "/works/" + id + "/"; }
+  openCase(id) { const target = pageFor(id); if (target) location.href = target; }
   openCaseLegacy(id, fromRoute) {
     if (window.CMS) { window.CMS.track("case_open", id); window.CMS.setPage(id); }
     if (!fromRoute && !this.state.view) this.returnY = window.scrollY;

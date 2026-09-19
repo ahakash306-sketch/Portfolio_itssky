@@ -472,7 +472,8 @@
       "slug": "new-mt16hx5y",
       "body": "A free workout, diet, and recovery planner born from gym conversations, designed and shipped entirely through generative AI, without opening a single design tool.",
       "soon": true,
-      "format": "longform"
+      "format": "longform",
+      "source": "workspace"
     }
   ]
 }

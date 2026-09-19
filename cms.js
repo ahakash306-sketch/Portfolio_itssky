@@ -310,7 +310,12 @@
     var d = seoDefaults(id), o = seoOverrides(id), out = {};
     if(!PAGES.some(function(p){return p.id===id;})) {
       var entry=projects().filter(function(p){return p.id===id;})[0];
-      if(entry) d={title:plain(entry.title),description:plain(entry.body),canonical:SITE_ORIGIN+pageFor(id),ogImage:entry.img ? new URL(entry.img,SITE_ORIGIN+'/').href : '',robots:entry.soon?'noindex, nofollow':'index, follow'};
+      if(entry) {
+        var publicPage = pageFor(id);
+        var publicUrl = publicPage ? new URL(publicPage, location.href) : null;
+        var publicPath = publicUrl ? publicUrl.pathname.replace(/^.*?(\/works\/)/, "$1") + publicUrl.search : "";
+        d={title:plain(entry.title),description:plain(entry.body),canonical:SITE_ORIGIN+publicPath,ogImage:entry.img ? new URL(entry.img,SITE_ORIGIN+'/').href : '',robots:entry.soon?'noindex, nofollow':'index, follow'};
+      }
     }
     SEO_FIELDS.forEach(function (f) {
       var v = o[f.key];
@@ -514,13 +519,13 @@
 
   function pageFor(id) {
     var native = PAGES.filter(function(p){return p.id===id;})[0];
-    if(native) return '/' + native.file;
+    if(native) return new URL(native.file, SCRIPT_BASE).href;
     var entry = projects().filter(function(p){return p.id===id;})[0];
     if(!entry) return '';
     var sources = {product:'kriyam',longform:'workspace',mvp:'buseit'};
     var inherited = {kriyam:'product',proteger:'product',goodbook:'product',workspace:'longform',buseit:'mvp'};
     var source = sources[entry.format || inherited[entry.source]];
-    return source ? '/works/'+source+'/?entry='+encodeURIComponent(id) : '';
+    return source ? new URL('works/'+source+'/?entry='+encodeURIComponent(id), SCRIPT_BASE).href : '';
   }
   function createTemplate(kind, fallbackCard) {
     var sources = {product:'kriyam',longform:'workspace',mvp:'buseit'};
@@ -727,6 +732,7 @@
     });
   }
   function queueEvent(e) {}
+  function sendQueue() {}
 
   loadRemote();
 
