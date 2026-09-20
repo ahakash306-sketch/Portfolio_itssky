@@ -1,0 +1,26 @@
+/* Shared refinement of the five existing case studies. */
+html [data-case-theme] { overflow-wrap: anywhere; }
+html [data-case-theme] :is(a,button):focus-visible { outline: 2px solid #f2f0ed; outline-offset: 4px; }
+html [data-case-theme] a { min-height: 44px; transition: color .2s ease, border-color .2s ease, background .2s ease; }
+html [data-case-theme] a > span { transition: transform .2s ease; }
+html [data-case-theme] a:is(:hover,:focus-visible) { color: #f2f0ed !important; border-color: #a8a49c !important; }
+html [data-case-theme] a:is(:hover,:focus-visible) > span:last-child { transform: translateX(3px); }
+html [data-case-theme] > div:first-child { gap: 16px !important; }
+html [data-case-theme] > div:first-child > span { min-width: 0; white-space: normal !important; line-height: 1.45; }
+html [data-case-theme] > div:first-child::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: #f2f0ed; z-index: 10; transform: scaleX(var(--case-progress,0)); transform-origin: left; pointer-events: none; }
+html [data-case-theme] article { min-width: 0; }
+html [data-case-theme] article :is(div,section) > * { min-width: 0; }
+@media (max-width: 700px) {
+ html [data-case-theme] article { padding-inline: 20px !important; }
+ html [data-case-theme] .impact-grid { grid-template-columns: minmax(0,1fr) !important; }
+ html [data-case-theme] [style*="border-right: 1px"] { border-right: 0 !important; padding-right: 0 !important; }
+}
+@media (max-width: 480px) {
+ html [data-case-theme] article { padding-inline: 16px !important; }
+ html [data-case-theme] .sky-facts { grid-template-columns: minmax(0,1fr) !important; gap: 6px !important; }
+ html [data-case-theme] article h1 { font-size: clamp(24px,7vw,30px) !important; line-height: 1.2 !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+ html [data-case-theme] *, html [data-case-theme] *::before, html [data-case-theme] *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+ html [data-case-theme] .reveal { opacity: 1 !important; transform: none !important; }
+}

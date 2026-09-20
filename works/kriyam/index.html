@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kriyam.ai — Field Investigation Platform Case Study</title>
+<meta name="description" content="How I designed Kriyam.ai, a secure field verification platform for BFSI — 30% faster turnaround, 80% fewer report errors, zero data leakage.">
+<link rel="canonical" href="https://itssky.co.in/works/kriyam/">
+<meta name="robots" content="index, follow">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Akash H">
+<meta property="og:locale" content="en_US">
+<meta name="author" content="Akash H">
+<meta name="theme-color" content="#0a0a0a">
+<meta property="article:author" content="https://itssky.co.in/">
+<meta property="og:title" content="Kriyam.ai — Field Investigation Platform Case Study">
+<meta property="og:description" content="How I designed Kriyam.ai, a secure field verification platform for BFSI — 30% faster turnaround, 80% fewer report errors, zero data leakage.">
+<meta property="og:url" content="https://itssky.co.in/works/kriyam/">
+<meta property="og:image" content="https://itssky.co.in/uploads/Kriyam%20Mockup.jpg">
+<meta property="og:image:alt" content="Kriyam.ai field investigation platform screens">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Kriyam.ai — Field Investigation Platform Case Study">
+<meta name="twitter:description" content="How I designed Kriyam.ai, a secure field verification platform for BFSI — 30% faster turnaround, 80% fewer report errors, zero data leakage.">
+<meta name="twitter:image" content="https://itssky.co.in/uploads/Kriyam%20Mockup.jpg">
+<meta name="twitter:image:alt" content="Kriyam.ai field investigation platform screens">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Kriyam.ai — Field Investigation Platform Case Study","description":"How I designed Kriyam.ai, a secure field verification platform for BFSI — 30% faster turnaround, 80% fewer report errors, zero data leakage.","url":"https://itssky.co.in/works/kriyam/","author":{"@type":"Person","name":"Akash H","url":"https://itssky.co.in/"},"publisher":{"@type":"Person","name":"Akash H"},"image":"https://itssky.co.in/uploads/Kriyam%20Mockup.jpg","isPartOf":{"@type":"CollectionPage","name":"Selected work","url":"https://itssky.co.in/#work"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://itssky.co.in/"},{"@type":"ListItem","position":2,"name":"Selected work","item":"https://itssky.co.in/#work"},{"@type":"ListItem","position":3,"name":"Kriyam.ai","item":"https://itssky.co.in/works/kriyam/"}]}</script>
+<script src="../../support.js"></script>
+<script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "xzze56a571");
+</script>
+<script src="../../case-refinements.js" defer></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<script src="../../cms.js?v=3"></script>
+<script src="../../case-data.js"></script>
+<script src="../../image-slot.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@100..900&display=swap" rel="stylesheet">
+<style>
+  html { background: #0a0a0a; overflow-x: clip; }
+  section { scroll-margin-top: 78px; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  @media (max-width: 800px) {
+    .work-grid { grid-template-columns: minmax(0, 1fr) !important; }
+    .cap-grid { grid-template-columns: minmax(0, 1fr) !important; }
+    .cap-grid > div:first-child { position: static !important; }
+  }
+  @media (max-width: 900px) {
+    #top { min-height: 0 !important; }
+  }
+  @media (max-width: 620px) {
+    header { flex-wrap: wrap; }
+  }
+  body { margin: 0; background: #0a0a0a; color: #f2f0ed; font-family: 'Google Sans Flex', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  * { box-sizing: border-box; }
+  a { color: #f2f0ed; text-decoration: none; }
+  a:hover { color: #ffffff; }
+  ::selection { background: #d8ff3e; color: #0a0a0a; }
+  @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+  [data-rise] { animation: rise .8s cubic-bezier(.2,.7,.2,1) both; }
+  a[aria-disabled="true"] { cursor: default; }
+
+  /* ---- phones and tablets in portrait ----
+     The desktop layout is a narrow 80vw column with type tuned for a big screen;
+     on a handheld that leaves too little width and text a few points too small.
+     Sizes are authored inline, so they are lifted here by their own values. */
+  @media (max-width: 900px), (max-width: 1024px) and (orientation: portrait), (pointer: coarse) {
+    .shell { width: 95vw !important; }
+    #top { min-height: 0 !important; padding-top: 8px !important; }
+    #top h1 { font-size: 30px !important; }
+    [style*="font-size: 10.5px"] { font-size: 12px !important; }
+    [style*="font-size: 11px"] { font-size: 12.5px !important; }
+    [style*="font-size: 11.5px"] { font-size: 13px !important; }
+    [style*="font-size: 12px"] { font-size: 13.5px !important; }
+    [style*="font-size: 12.5px"] { font-size: 14px !important; }
+    [style*="font-size: 13px"] { font-size: 14.5px !important; }
+    [style*="font-size: 13.5px"] { font-size: 15px !important; }
+    [style*="font-size: 14px"] { font-size: 15.5px !important; }
+    [style*="font-size: 14.5px"] { font-size: 16px !important; }
+    [style*="font-size: 15px"] { font-size: 16.5px !important; }
+    [style*="font-size: 15.5px"] { font-size: 17px !important; }
+    [style*="font-size: 16px"] { font-size: 17.5px !important; }
+    [style*="font-size: 16.5px"] { font-size: 18px !important; }
+    [style*="font-size: 17px"] { font-size: 18.5px !important; }
+    [style*="font-size: clamp(15px, 1.6vw, 19px)"] { font-size: 17px !important; }
+    [style*="font-size: clamp(20px, 2.6vw, 34px)"] { font-size: 25px !important; }
+    [style*="font-size: clamp(19px, 2.2vw, 28px)"] { font-size: 22px !important; }
+    [style*="font-size: clamp(17px, 1.9vw, 23px)"] { font-size: 19.5px !important; }
+    [style*="font-size: clamp(19px, 2vw, 26px)"] { font-size: 22px !important; }
+    [style*="font-size: clamp(22px, 3vw, 40px)"] { font-size: 29px !important; }
+    [style*="font-size: clamp(19px, 2.2vw, 26px)"] { font-size: 22px !important; }
+    [style*="font-size: clamp(23px, 3.1vw, 36px)"] { font-size: 26px !important; }
+    [style*="font-size: clamp(26px, 3.2vw, 38px)"] { font-size: 30px !important; }
+    [style*="font-size: clamp(30px, 4vw, 46px)"] { font-size: 34px !important; }
+    /* comfortable tap targets on the small links and pills */
+    header a, #contact a { padding-block: 6px; }
+  }
+  @media (max-width: 600px) {
+    .hero-photo { width: 108px !important; height: 108px !important; }
+    #top h1 { font-size: 26px !important; }
+  }
+  @media (max-width: 640px) {
+    .journey-row { grid-template-columns: minmax(0, 1fr) !important; gap: 6px !important; }
+  }
+  @keyframes preRing { from { stroke-dashoffset: 301.6; } to { stroke-dashoffset: 0; } }
+  @keyframes preSpin { to { transform: rotate(360deg); } }
+  @keyframes preOut { 0%, 88% { opacity: 1; visibility: visible; } 100% { opacity: 0; visibility: hidden; } }
+  @keyframes preLift { 0%, 88% { transform: none; opacity: 1; } 100% { transform: scale(.92); opacity: 0; } }
+  /* Anything that isn't a desktop gets the note instead, and five seconds to read it. */
+  @media (max-width: 900px), (max-width: 1024px) and (orientation: portrait), (pointer: coarse) {
+    .pre { animation-duration: 5.4s !important; }
+    .pre > div { animation-duration: 5.4s !important; }
+    .pre-ring { animation-duration: 5s !important; }
+    .pre-name { display: none !important; }
+    .pre-msg { display: block !important; }
+  }
+</style>
+<style>
+/* Case-study overlay styles. Every rule is scoped to [data-case-theme] so the
+   detail layouts keep their own type and radius scale without touching the home page. */
+:root {
+    --color-bg: #0a0a0a;
+    --color-surface: #0e0e0d;
+    --ink-deep: #080807;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --ink: #0e0e0d;
+    --edge: #1c1b18;
+    --color-accent: #f2f0ed;
+    --color-accent-100: #ffffff;
+    --color-accent-200: #f2f0ed;
+    --color-accent-300: #a8a49c;
+    --color-accent-400: #8b8880;
+    --color-accent-500: #f2f0ed;
+    --color-accent-600: #6b6862;
+    --color-accent-700: #55524c;
+    --color-accent-800: #34322d;
+    --color-accent-900: #1c1b18;
+    --color-accent-2: #f2f0ed;
+    --color-accent-2-500: #f2f0ed;
+    --color-section: #0e0e0d;
+    --color-section-glow: #131312;
+    --color-section-ghost: #1c1b18;
+    --font-heading: 'Google Sans Flex', system-ui, sans-serif;
+    --font-body: 'Google Sans Flex', system-ui, sans-serif;
+    --body-copy: #8b8880;
+    --color-neutral-100: #f2f0ed;
+    --color-neutral-200: #e2dfda;
+    --color-neutral-300: #c4c0b8;
+    --color-neutral-400: #a8a49c;
+    --color-neutral-500: #8b8880;
+    --color-neutral-600: #6b6862;
+    --color-neutral-700: #55524c;
+    --color-neutral-800: #34322d;
+    --color-neutral-900: #1c1b18;
+    --color-divider: #1c1b18;
+    --shadow-sm: 0 10px 30px rgba(0, 0, 0, .45);
+  }
+/* Any text without its own colour is white — never a browser default. */
+[data-case-theme] h1, [data-case-theme] h2, [data-case-theme] h3, [data-case-theme] h4, [data-case-theme] h5, [data-case-theme] h6, [data-case-theme] p, [data-case-theme] li, [data-case-theme] span, [data-case-theme] div, [data-case-theme] td, [data-case-theme] th, [data-case-theme] label, [data-case-theme] figcaption,
+[data-case-theme] strong, [data-case-theme] em, [data-case-theme] small, [data-case-theme] blockquote, [data-case-theme] section, [data-case-theme] article, [data-case-theme] header, [data-case-theme] footer, [data-case-theme] nav, [data-case-theme] button {
+    color: inherit;
+  }
+[data-case-theme] input,
+[data-case-theme] textarea,
+[data-case-theme] select { color: #fff; }
+/* Keep media on its own composited layer so a hover repaint on the parent
+     (border, transform) can't make the image blink while it re-rasterises. */
+[data-case-theme] .card-img image-slot, [data-case-theme] .card-img img, [data-case-theme] .tool img, [data-case-theme] .dock img {
+    backface-visibility: hidden;
+    transform: translateZ(0);
+  }
+[data-case-theme] .card-img { backface-visibility: hidden; }
+[data-case-theme] h1,
+[data-case-theme] h2,
+[data-case-theme] h3,
+[data-case-theme] h4,
+[data-case-theme] h5,
+[data-case-theme] h6 { color: #fff; }
+[data-case-theme] a { color: #f2f0ed; text-decoration: none; }
+[data-case-theme] a:hover { color: #ffffff; }
+@keyframes marquee { from { transform: translate3d(0,0,0); } to { transform: translate3d(-50%,0,0); } }
+@keyframes glowIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes caseIn { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+[data-case-theme] .case-in { animation: caseIn .5s cubic-bezier(.22,.7,.2,1) both; }
+[data-case-theme] [data-reveal] { opacity: 0; transform: translateY(22px); transition: opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1); }
+[data-case-theme] [data-reveal].in { opacity: 1; transform: none; }
+[data-case-theme] .mq:hover .mq-track { animation-play-state: paused; }
+[data-case-theme] .glass {
+    position: fixed;
+    background: linear-gradient(155deg, rgba(255,255,255,.13), rgba(255,255,255,.04) 42%, rgba(255,255,255,.09));
+    -webkit-backdrop-filter: blur(22px) saturate(60%) brightness(1.1); backdrop-filter: blur(22px) saturate(60%) brightness(1.1);
+    -webkit-backdrop-filter: blur(22px) saturate(60%) brightness(1.1);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.35),
+      inset 0 -1px 1px rgba(255,255,255,.10),
+      inset 0 0 0 1px rgba(255,255,255,.08),
+      0 10px 30px rgba(0,0,0,.55),
+      0 2px 8px rgba(0,0,0,.35);
+    isolation: isolate;
+  }
+[data-case-theme] .glass::before {
+    content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+    background: radial-gradient(120% 140% at 20% -40%, rgba(255,255,255,.28), rgba(255,255,255,0) 55%);
+    mix-blend-mode: screen;
+  }
+[data-case-theme] .glass::after {
+    content: ""; position: absolute; left: 8%; right: 8%; top: 1px; height: 40%; border-radius: 999px; pointer-events: none;
+    background: linear-gradient(180deg, rgba(255,255,255,.16), rgba(255,255,255,0));
+    filter: blur(.5px);
+  }
+/* Craft grid holds 3 x 2 everywhere down to tablet landscape; only
+     tablet portrait and phones are allowed to reflow. */
+  @media (max-width: 1024px) and (orientation: portrait) {
+    [data-case-theme] .craft-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+  }
+@media (max-width: 600px) {
+[data-case-theme] .craft-grid { grid-template-columns: minmax(0, 1fr) !important; }
+}
+@media (max-width: 600px) {
+[data-case-theme] .about-photo { display: none !important; }
+[data-case-theme] .tools { display: grid !important; grid-template-columns: repeat(3, minmax(0, 1fr)) !important; justify-items: center; gap: 14px !important; width: 100% !important; }
+[data-case-theme] .tools .tool { width: 46px !important; height: 46px !important; }
+[data-case-theme] .impact-grid { grid-template-columns: minmax(0, 1fr) !important; }
+[data-case-theme] .tabs-wrap { display: block !important; }
+[data-case-theme] .tabs { display: grid !important; grid-template-columns: repeat(3, minmax(0, 1fr)); width: 100%; overflow: visible !important; }
+[data-case-theme] .tabs button { width: 100%; padding: 11px 4px !important; font-size: 12px !important; text-align: center; }
+[data-case-theme] .tabs .lbl-full { display: none; }
+[data-case-theme] .tabs .lbl-short { display: inline; }
+}
+[data-case-theme] h1,
+[data-case-theme] h2,
+[data-case-theme] h3,
+[data-case-theme] h4,
+[data-case-theme] nav,
+[data-case-theme] button,
+[data-case-theme] a { font-family: var(--font-heading); }
+[data-case-theme] h1,
+[data-case-theme] h2 { font-weight: 300 !important; letter-spacing: -.035em !important; }
+[data-case-theme] h3,
+[data-case-theme] h4 { font-weight: 400 !important; letter-spacing: -.025em !important; }
+[data-case-theme] h1,
+[data-case-theme] h2,
+[data-case-theme] h3,
+[data-case-theme] h4,
+[data-case-theme] h5,
+[data-case-theme] h6 { color: #f2f0ed; }
+[data-case-theme] .card,
+[data-case-theme] .glass,
+[data-case-theme] .tabs { border-radius: 12px !important; }
+/* minimal buttons + type */
+[data-case-theme] [style*="border-radius: 999px"] { border-radius: 8px !important; }
+[data-case-theme] [style*="border-radius: 50%"] { border-radius: 999px !important; }
+[data-case-theme] [style*="border-radius: 16px"],
+[data-case-theme] [style*="border-radius: 26px"],
+[data-case-theme] [style*="border-radius: 14px"] { border-radius: 12px !important; }
+[data-case-theme] button[style*="background: var(--color-accent)"],
+[data-case-theme] a[style*="background: var(--color-accent)"] {
+    background: transparent !important;
+    border: 1px solid var(--edge) !important;
+    color: #f2f0ed !important;
+    font-weight: 400 !important;
+  }
+[data-case-theme] button,
+[data-case-theme] .card-go,
+[data-case-theme] a[style*="border-radius"] { transition: opacity .25s !important; }
+[data-case-theme] button:hover,
+[data-case-theme] .card-go:hover { opacity: .6 !important; }
+/* read-the-blog links: no hover treatment at all */
+[data-case-theme] a[href*="medium.com"], [data-case-theme] a[href*="medium.com"] * { transition: none !important; }
+[data-case-theme] a[href*="medium.com"]:hover,
+[data-case-theme] a[href*="medium.com"]:hover * { opacity: 1 !important; color: inherit !important; border-color: inherit !important; background: inherit !important; }
+[data-case-theme] .card:hover .card-go { border-color: var(--edge) !important; color: #f2f0ed !important; }
+[data-case-theme] button,
+[data-case-theme] .chip { font-weight: 400 !important; letter-spacing: .01em; }
+[data-case-theme] strong { font-weight: 500 !important; }
+[data-case-theme] .em { font-family: 'Google Sans Flex', system-ui, sans-serif !important; font-style: normal !important; font-weight: 300 !important; color: #f2f0ed !important; }
+[data-case-theme] h2 { font-size: clamp(19px, 2.2vw, 26px) !important; }
+[data-case-theme] h3 { font-size: clamp(16px, 1.7vw, 19px) !important; }
+[data-case-theme] .chip { border-radius: 4px !important; }
+[data-case-theme] .tabs button { border-radius: 8px !important; }
+[data-case-theme] h1,
+[data-case-theme] h2,
+[data-case-theme] h3,
+[data-case-theme] h4,
+[data-case-theme] h5,
+[data-case-theme] h6 { color: #fff; }
+[data-case-theme] p,
+[data-case-theme] li,
+[data-case-theme] span:not([class]) { font-family: var(--font-body); }
+[data-case-theme] .chip,
+[data-case-theme] .tool { white-space: nowrap; flex: none; }
+[data-case-theme] .tool-icon.glyph { width: 66% !important; height: 66% !important; background: rgba(255,255,255,.07); box-shadow: inset 0 0 0 1px rgba(255,255,255,.09); padding: 14%; box-sizing: content-box; }
+[data-case-theme] .lbl-short { display: none; }
+[data-case-theme] .tool:hover .tool-name { opacity: 1 !important; transform: translate(-50%, 0) !important; }
+[data-case-theme] .tools { overflow: visible !important; }
+[data-case-theme] .persona-rail { scrollbar-width: none; }
+[data-case-theme] .persona-rail::-webkit-scrollbar { display: none; }
+[data-case-theme] .em { font-family: "Instrument Serif", Georgia, serif; font-style: italic; font-weight: 400; letter-spacing: -.01em; }
+[data-case-theme] .card-img { transition: transform .25s linear; }
+[data-case-theme] .card:hover .card-go { border-color: var(--color-accent); color: var(--color-accent); }
+</style>
+<link rel="stylesheet" href="../../case-refinements.css">
+</helmet>
+
+    <div data-case-theme="" style="min-height: 100vh; background: #0a0a0a;">
+      <div style="position: sticky; top: 0; z-index: 5; display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 14px clamp(16px, 4vw, 48px); background: color-mix(in srgb, var(--color-bg) 88%, transparent); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); border-bottom: 1px solid var(--color-divider);">
+        <a href="../../explore.html?v=4#work" style="text-decoration: none; display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; flex: none; background: transparent; border: 1px solid var(--color-neutral-800); color: var(--body-copy); font-family: var(--font-heading); font-size: 13px; font-weight: 500; padding: 8px 14px; border-radius: 999px; cursor: pointer;" style-hover="border-color: var(--color-accent); color: var(--color-accent);"><span>←</span> All work</a>
+        <span style="font-size: 12.5px; color: var(--color-neutral-500); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ cs.name }}</span>
+      </div>
+      <sc-if value="{{ isGeneric }}" hint-placeholder-val="{{ true }}">
+      <article style="max-width: 1080px; margin: 0 auto; padding: clamp(28px, 4vw, 48px) clamp(20px, 5vw, 56px) clamp(60px, 9vw, 120px);">
+
+        <div style="border: 1px solid var(--edge); background: var(--ink); border-radius: var(--radius-lg); overflow: hidden; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); align-items: stretch; margin-bottom: clamp(34px, 6vw, 70px);">
+          <div style="padding: clamp(24px, 3.4vw, 44px); display: flex; flex-direction: column; justify-content: center; gap: 16px;">
+            <h1 style="margin: 0; font-size: clamp(23px, 3.1vw, 36px); line-height: 1.14; letter-spacing: -.03em; font-weight: 500;"><span style="color: var(--color-accent);">{{ d.statLead }}</span>{{ d.statRest }}</h1>
+            <p style="margin: 0; font-size: 15px; line-height: 1.65; color: var(--body-copy); max-width: 44ch; text-wrap: pretty;">{{ d.lede }}</p>
+            <div style="display: flex; flex-wrap: wrap; gap: 18px; margin-top: 6px;">
+              <sc-for list="{{ d.links }}" as="l" hint-placeholder-count="1">
+                <a href="{{ l.href }}" style="display: inline-flex; align-items: center; gap: 7px; font-size: 14.5px; font-weight: 500; color: var(--color-accent);">{{ l.label }} <span>↗</span></a>
+              </sc-for>
+            </div>
+          </div>
+          <div style="position: relative; min-height: 260px;">
+            <sc-if value="{{ d.heroIsVideo }}" hint-placeholder-val="{{ false }}">
+              <video data-autoplay-in-view="" data-vsrc="{{ d.heroSrc }}" muted="{{ true }}" loop="{{ true }}" playsInline="{{ true }}" preload="none" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;"></video>
+            </sc-if>
+            <sc-if value="{{ d.heroIsPhoto }}" hint-placeholder-val="{{ true }}">
+              <image-slot id="{{ d.slotHero }}" shape="rect" src="{{ d.heroSrc }}" placeholder="Hero image"></image-slot>
+            </sc-if>
+          </div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; border-top: 1px solid var(--edge); margin-bottom: clamp(40px, 7vw, 84px);">
+          <sc-for list="{{ d.facts }}" as="f" hint-placeholder-count="5">
+            <div class="sky-facts" style="display: grid; grid-template-columns: minmax(0, 15ch) minmax(0, 1fr); gap: clamp(14px, 3vw, 44px); align-items: baseline; padding: clamp(14px, 1.8vw, 20px) 2px; border-bottom: 1px solid var(--color-divider);">
+              <div style="font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--color-neutral-600);">{{ f.k }}</div>
+              <div style="font-size: 15.5px; line-height: 1.6; font-weight: 300; letter-spacing: -.01em; color: var(--color-neutral-100); white-space: pre-line; text-wrap: pretty;">{{ f.v }}</div>
+            </div>
+          </sc-for>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 16px; margin-bottom: clamp(20px, 2.6vw, 30px);">
+          <h2 style="margin: 0; font-size: clamp(19px, 2.2vw, 26px); font-weight: 500; letter-spacing: -.02em;">the Impact</h2>
+          <span style="flex: 1; height: 1px; background: var(--color-divider);"></span>
+        </div>
+        <div class="impact-grid" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(14px, 2vw, 24px); margin-bottom: clamp(44px, 7vw, 90px);">
+          <sc-for list="{{ d.impact }}" as="i" hint-placeholder-count="4">
+            <div style="border: 1px solid var(--edge); background: var(--ink); border-radius: 16px; overflow: hidden;">
+              <div style="position: relative; height: clamp(198px, 24.2vw, 264px); width: 100%;">
+                <sc-if value="{{ i.isVideo }}" hint-placeholder-val="{{ false }}">
+                  <video data-autoplay-in-view="" data-vsrc="{{ i.src }}" muted="{{ true }}" loop="{{ true }}" playsInline="{{ true }}" preload="none" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;"></video>
+                </sc-if>
+                <sc-if value="{{ i.notVideo }}" hint-placeholder-val="{{ true }}">
+                  <image-slot id="{{ i.slot }}" shape="rect" src="{{ i.src }}" placeholder="Impact image" style="position: absolute; inset: 0; width: 100%; height: 100%;"></image-slot>
+                </sc-if>
+              </div>
+              <div style="padding: clamp(18px, 2.2vw, 26px);">
+                <h3 style="margin: 0 0 10px; font-size: 16.5px; font-weight: 500; letter-spacing: -.015em;">{{ i.h }}</h3>
+                <p style="margin: 0; font-size: 14px; line-height: 1.65; color: var(--body-copy); text-wrap: pretty;">{{ i.p }}</p>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 16px; margin-bottom: clamp(20px, 2.6vw, 30px);">
+          <h2 style="margin: 0; font-size: clamp(19px, 2.2vw, 26px); font-weight: 500; letter-spacing: -.02em;">Project Overview</h2>
+          <span style="flex: 1; height: 1px; background: var(--color-divider);"></span>
+        </div>
+        <div style="margin-bottom: clamp(44px, 7vw, 90px);">
+          <sc-for list="{{ d.overview }}" as="para" hint-placeholder-count="4">
+            <p style="margin: 0 0 18px; font-size: 15px; line-height: 1.75; color: var(--body-copy); max-width: none; text-wrap: pretty;">{{ para }}</p>
+          </sc-for>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 16px; margin-bottom: clamp(20px, 2.6vw, 30px);">
+          <h2 style="margin: 0; font-size: clamp(19px, 2.2vw, 26px); font-weight: 500; letter-spacing: -.02em;">Role &amp; Team</h2>
+          <span style="flex: 1; height: 1px; background: var(--color-divider);"></span>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; gap: clamp(20px, 3vw, 44px); margin-bottom: clamp(44px, 7vw, 90px);">
+          <div style="flex: 3 1 420px; min-width: 0; border-right: 1px solid var(--color-divider); padding-right: clamp(0px, 2vw, 32px);">
+            <sc-for list="{{ d.role }}" as="para" hint-placeholder-count="4">
+              <p style="margin: 0 0 18px; font-size: 15px; line-height: 1.75; color: var(--body-copy); max-width: none; text-wrap: pretty;">{{ para }}</p>
+            </sc-for>
+          </div>
+          <div style="flex: 1 1 220px; min-width: 0;">
+            <h3 style="margin: 0 0 20px; font-size: 17px; font-weight: 500; letter-spacing: -.015em;">My Team</h3>
+            <div style="display: flex; flex-direction: column; gap: 16px;">
+              <sc-for list="{{ d.team }}" as="m">
+                <div style="display: grid; grid-template-columns: 22px 1fr; gap: 12px; align-items: start;">
+                  <sc-if value="{{ m.hasIcon }}" hint-placeholder-val="{{ false }}">
+                    <img data-lazysrc="{{ m.icon }}" alt="" style="width: 22px; height: 22px; object-fit: contain;">
+                  </sc-if>
+                  <span>
+                    <span style="display: block; font-size: 14px; color: var(--color-neutral-100);">{{ m.n }}</span>
+                    <span style="display: block; font-size: 12px; color: var(--color-neutral-600); margin-top: 3px;">{{ m.r }}</span>
+                  </span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 16px; margin-bottom: clamp(20px, 2.6vw, 30px);">
+          <h2 style="margin: 0; font-size: clamp(19px, 2.2vw, 26px); font-weight: 500; letter-spacing: -.02em;">the Outcome</h2>
+          <span style="flex: 1; height: 1px; background: var(--color-divider);"></span>
+        </div>
+        <div style="position: relative; height: clamp(360px, 51vw, 690px); margin-bottom: clamp(44px, 7vw, 90px);">
+          <sc-if value="{{ d.outcomeIsVideo }}" hint-placeholder-val="{{ false }}">
+            <video data-autoplay-in-view="" data-vsrc="{{ d.outcomeSrc }}" muted="{{ true }}" loop="{{ true }}" playsInline="{{ true }}" preload="none" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border-radius: 26px;"></video>
+          </sc-if>
+          <sc-if value="{{ d.outcomeIsPhoto }}" hint-placeholder-val="{{ true }}">
+            <image-slot id="{{ d.slotOutcome }}" shape="rounded" radius="26" src="{{ d.outcomeSrc }}" placeholder="Outcome image"></image-slot>
+          </sc-if>
+        </div>
+
+        <sc-if value="{{ d.hasClients }}" hint-placeholder-val="{{ false }}">
+          <div style="display: flex; align-items: center; gap: 16px; margin-bottom: clamp(20px, 2.6vw, 30px);">
+            <h2 style="margin: 0; font-size: clamp(19px, 2.2vw, 26px); font-weight: 500; letter-spacing: -.02em;">{{ d.clientsLabel }}</h2>
+            <span style="flex: 1; height: 1px; background: var(--color-divider);"></span>
+          </div>
+          <div style="display: flex; flex-wrap: wrap; gap: clamp(16px, 2.4vw, 32px); align-items: center; margin-bottom: clamp(40px, 6vw, 76px);">
+            <sc-for list="{{ d.clients }}" as="c" hint-placeholder-count="3">
+              <div style="position: relative; width: clamp(130px, 16vw, 190px); height: clamp(56px, 7vw, 78px); border-radius: 10px; overflow: hidden;">
+                <image-slot id="{{ c.slot }}" shape="rounded" radius="10" fit="contain" src="{{ c.src }}" placeholder="{{ c.name }}" style="position: absolute; inset: 0; width: 100%; height: 100%;"></image-slot>
+              </div>
+            </sc-for>
+          </div>
+        </sc-if>
+
+        <div style="border: 1px solid var(--edge); background: var(--ink); border-radius: var(--radius-lg); padding: clamp(26px, 4vw, 46px); text-align: center;">
+          <img src="../../uploads/wired-lineal-926-road-barrier-hover-pinch.gif" alt="" style="width: 52px; height: 52px; opacity: .75; margin: 0 auto 16px;">
+          <h3 style="margin: 0 0 12px; font-size: clamp(17px, 2vw, 21px); font-weight: 500; letter-spacing: -.02em;">And that's all I can reveal here!</h3>
+          <p style="margin: 0 auto 22px; font-size: 14.5px; line-height: 1.7; color: var(--body-copy); max-width: 52ch; text-wrap: pretty;">The full story is locked away under NDA. Want to know more? Let's connect and I'll share what I can behind the scenes!</p>
+          <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 12px;">
+            <sc-for list="{{ d.ctaLinks }}" as="l" hint-placeholder-count="2">
+              <a href="{{ l.href }}" style="padding: 12px 22px; border-radius: 999px; border: 1px solid var(--edge); color: var(--color-neutral-200); font-size: 14px; font-weight: 500;" style-hover="border-color: var(--color-accent); color: var(--color-accent);">{{ l.label }}</a>
+            </sc-for>
+          </div>
+        </div>
+
+        <div style="margin-top: clamp(30px, 5vw, 56px); padding-top: 26px; border-top: 1px solid var(--color-divider); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px;">
+          <span style="font-size: 12.5px; color: var(--color-neutral-600);">Next case — {{ cs.nextName }}</span>
+          <a href="{{ nextHref }}" style="text-decoration: none; display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; flex: none; background: transparent; border: 1px solid var(--color-neutral-800); color: var(--body-copy); font-family: var(--font-heading); font-size: 13px; font-weight: 500; padding: 8px 14px; border-radius: 999px; cursor: pointer;">Read it <span>→</span></a>
+        </div>
+      </article>
+      </sc-if>
+
+      <sc-if value="{{ never }}" hint-placeholder-val="{{ false }}">
+      <article style="max-width: 1080px; margin: 0 auto; padding: clamp(34px, 6vw, 76px) clamp(20px, 5vw, 56px) clamp(60px, 9vw, 120px);">
+        <p style="margin: 0 0 16px; font-size: 12.5px; letter-spacing: .18em; text-transform: uppercase; color: var(--color-accent-300);">{{ cs.tag }}</p>
+        <h1 style="margin: 0 0 20px; font-size: clamp(23px, 3.1vw, 36px); line-height: 1.14; letter-spacing: -.03em; font-weight: 500; max-width: 22ch;">{{ cs.title }}</h1>
+        <p style="margin: 0 0 clamp(28px, 4vw, 44px); font-size: clamp(16px, 1.8vw, 19px); line-height: 1.65; color: var(--body-copy); max-width: 62ch; text-wrap: pretty;">{{ cs.lede }}</p>
+
+        <div style="position: relative; height: clamp(220px, 30vw, 420px); margin-bottom: clamp(28px, 4vw, 48px);"><image-slot id="legacy-hero" shape="rounded" radius="26" placeholder="Hero"></image-slot></div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr)); gap: 1px; background: var(--color-divider); border-radius: var(--radius-md); overflow: hidden; margin-bottom: clamp(36px, 6vw, 64px);">
+          <sc-for list="{{ cs.facts }}" as="f" hint-placeholder-count="4">
+            <div style="background: var(--color-bg); padding: 18px 20px;">
+              <div style="font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--color-neutral-600); margin-bottom: 7px;">{{ f.k }}</div>
+              <div style="font-size: 14.5px; color: var(--color-neutral-200); line-height: 1.45;">{{ f.v }}</div>
+            </div>
+          </sc-for>
+        </div>
+
+        <sc-for list="{{ cs.sections }}" as="s" hint-placeholder-count="4">
+          <section style="display: flex; flex-wrap: wrap; gap: clamp(14px, 3vw, 44px); padding: clamp(26px, 4vw, 44px) 0; border-top: 1px solid var(--color-divider);">
+            <div style="flex: 1 1 180px; max-width: 260px;">
+              <h2 style="margin: 0; font-size: clamp(18px, 2.2vw, 24px); font-weight: 500; letter-spacing: -.02em; position: sticky; top: 88px;">{{ s.h }}</h2>
+            </div>
+            <div style="flex: 3 1 320px; min-width: 0;">
+              <sc-for list="{{ s.paras }}" as="para" hint-placeholder-count="2">
+                <p style="margin: 0 0 16px; font-size: 15.5px; line-height: 1.75; color: var(--body-copy); max-width: 68ch; text-wrap: pretty;">{{ para }}</p>
+              </sc-for>
+              <sc-if value="{{ s.hasBullets }}" hint-placeholder-val="{{ false }}">
+                <ul style="margin: 6px 0 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px;">
+                  <sc-for list="{{ s.bullets }}" as="b" hint-placeholder-count="3">
+                    <li style="display: grid; grid-template-columns: 14px 1fr; gap: 12px; font-size: 15px; line-height: 1.65; color: var(--body-copy);">
+                      <span style="color: var(--color-accent); font-size: 13px; line-height: 1.7;">▸</span><span>{{ b }}</span>
+                    </li>
+                  </sc-for>
+                </ul>
+              </sc-if>
+              <sc-if value="{{ s.hasImage }}" hint-placeholder-val="{{ false }}">
+                <div style="position: relative; height: clamp(200px, 26vw, 360px); margin-top: 22px;"><image-slot id="legacy-section" shape="rounded" radius="14" placeholder="Section image"></image-slot></div>
+              </sc-if>
+            </div>
+          </section>
+        </sc-for>
+
+        <div style="margin-top: clamp(30px, 5vw, 56px); padding: clamp(22px, 3vw, 34px); border-radius: var(--radius-lg); background: linear-gradient(140deg, var(--color-accent-900), color-mix(in srgb, var(--color-surface) 80%, var(--color-bg))); box-shadow: var(--shadow-sm); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 18px;">
+          <div>
+            <div style="font-size: 11.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--color-neutral-500); margin-bottom: 8px;">Next case</div>
+            <div style="font-family: var(--font-heading); font-size: clamp(17px, 2.2vw, 22px); font-weight: 500; letter-spacing: -.02em;">{{ cs.nextName }}</div>
+          </div>
+          <a href="{{ nextHref }}" style="text-decoration: none; display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; flex: none; background: transparent; border: 1px solid var(--color-neutral-800); color: var(--body-copy); font-family: var(--font-heading); font-size: 13px; font-weight: 500; padding: 8px 14px; border-radius: 999px; cursor: pointer;">Read it <span>→</span></a>
+        </div>
+      </article>
+      </sc-if>
+      <sc-if value="{{ noLayout }}" hint-placeholder-val="{{ false }}">
+        <article style="max-width: 640px; margin: 0 auto; padding: clamp(80px, 16vh, 180px) clamp(20px, 5vw, 56px); text-align: center;">
+          <h1 style="margin: 0 0 14px; font-size: clamp(22px, 2.8vw, 32px); font-weight: 300; letter-spacing: -.03em;">{{ csTitle }}</h1>
+          <p style="margin: 0; font-size: 15px; line-height: 1.7; color: var(--body-copy);">The full case study for this project isn&rsquo;t written up yet.</p>
+        </article>
+      </sc-if>
+    </div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}">
+const WORKS = [
+  { num: "01", id: "kriyam", title: "Built for trust. Designed for scale.", body: "Kriyam.ai brings order to insurance's most vulnerable touchpoint — field verification. Ad-hoc processes replaced with a secure, auditable platform.", meta: "BFSI · Web & Mobile", img: "../../uploads/Kriyam%20Mockup.jpg", slug: "built-for-trust-designed-for-scale" },
+  { num: "02", id: "proteger", title: "Building tomorrow's smart factories", body: "End-to-end operational intelligence for manufacturers. Designed with factory workers on the floor, built for speed on a shared tablet.", meta: "Manufacturing · Web & Tablet", img: "../../uploads/391985742_854c309b-66af-4b9a-a203-12cf7fae41dc%202.jpg", slug: "building-tomorrow-s-smart-factories" },
+  { num: "03", id: "goodbook", title: "Attendance, payroll and HR — beautifully simple", body: "From check-in to payslip in one place. A platform people are forced to open, redesigned so they don't hate opening it.", meta: "Enterprise HR · Web & Mobile", img: "../../uploads/138817034_9b8cfbdd-ec88-42cb-af03-f4cdb9f0cff3.jpg", slug: "attendance-payroll-and-hr-beautifully-simple" },
+  { num: "04", id: "workspace", title: "WorkSpace", body: "Letting every client run cases their own way — reshaping the app around how teams already work, instead of teaching them ours.", meta: "Case study · Product design", img: "../../uploads/Case%20cover.jpg", slug: "workspace" },
+  { num: "05", id: "buseit", title: "Buy it. Use it. Sell it.", body: "A trust-first resale marketplace designed to remove fraud, friction and fear from second-hand commerce in India.", meta: "C2C · iOS & Android", img: "../../uploads/b2.png", slug: "buy-it-use-it-sell-it" }
+];
+
+function slugify(s) {
+  return String(s || "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+}
+
+/* Card copy is rendered as plain text — strip any HTML a paste left behind. */
+function plainText(v) {
+  return String(v == null ? "" : v)
+    .replace(/<br\s*\/?>/gi, " ")
+    .replace(/<[^>]*>/g, "")
+    .replace(/&nbsp;/g, " ")
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+/* Admin-editable card data: keyed map that CMS.projects() merges saved edits over. */
+const PROJECTS = {};
+WORKS.forEach((w) => {
+  PROJECTS[w.id] = {
+    id: w.id, title: w.title, body: w.body, img: w.img,
+    tag: w.meta, slug: w.slug
+  };
+});
+
+const CRAFT = [
+  { num: "01", title: "UX Strategy & Research", body: "I run user interviews, contextual field studies and usability testing, then turn the findings into journey maps, personas and a prioritised problem statement — so the roadmap is built on evidence rather than assumptions." },
+  { num: "02", title: "Product & Interaction Design", body: "I design end-to-end product flows, information architecture and interaction models for web, tablet and mobile — covering the edge cases, empty states and error paths, not just the happy path." },
+  { num: "03", title: "Design Systems", body: "I build and document scalable design systems in Figma — tokens, components, variants and usage guidelines — so engineering ships consistent, accessible UI faster and the visual language holds as the product grows." },
+  { num: "04", title: "Visual & Interface Design", body: "I set typography, colour, spacing and layout systems that give an interface a clear hierarchy and a distinct brand voice, with every visual decision doing measurable work for comprehension." },
+  { num: "05", title: "AI & Emerging Technology", body: "I design for AI-assisted and agentic products — prompt and result patterns, confidence and citation cues, review and override controls — so users understand what the system did and stay in control of the outcome." },
+  { num: "06", title: "Collaboration & Delivery", body: "I work alongside product managers, engineers and QA from discovery to release: annotated specs, design reviews, developer handoff in Figma and post-launch iteration based on analytics and user feedback." }
+];
+
+const JOURNEY = [
+  { when: "Aug 2024", kicker: "Senior chapter", role: "Senior UX Designer — GEOGO Techsolutions",
+    body: "Same mission, bigger scope. Leading design across multiple simultaneous products — analytics platforms to factory monitoring systems — while shaping design culture, mentoring, and staying close to the work. Still asking why does it work this way.",
+    tags: ["product leadership", "design systems", "multi-domain", "present"] },
+  { when: "Jul 2023", kicker: "The deep end", role: "UI/UX Designer — GEOGO Techsolutions",
+    body: "Stepped straight into the most complex problem spaces yet — fintech dashboards, agentic AI tools, HR platforms, factory monitoring. Products where a confusing flow costs real money or real trust. End-to-end: research, wireframes, prototypes, systems, handoff. Did it well enough that the title changed.",
+    tags: ["BFSI", "agentic AI", "HR tech", "enterprise"] },
+  { when: "Nov 2022", kicker: "Levelling up", role: "UI & Visual Designer — Huemn",
+    body: "Moved into product UI: the Huemn application, landing pages, multi-brand content. Completed the CalArts UI/UX Design Specialization during this stretch — not for the certificate, but because going deeper always is. The design got more intentional.",
+    tags: ["product UI", "design systems", "CalArts certified"] },
+  { when: "Nov 2021", kicker: "Sharpening the craft", role: "Visual Designer — Affinity X",
+    body: "A year of high-quality assets under tight deadlines. Less glamorous than it sounds, more valuable than expected. Good design under pressure is still good design — discipline is a design skill too.",
+    tags: ["visual storytelling", "brand communication", "deadline culture"] },
+  { when: "Jun 2021", kicker: "First real canvas", role: "Graphic & UI/UX Designer — Farrago Media",
+    body: "First paid design role. Web and mobile interfaces across industries, real clients, and the discovery that real constraints make better design than complete freedom.",
+    tags: ["web & mobile UI", "branding", "client work"] },
+  { when: "2020 — 2021", kicker: "The lockdown pivot", role: "Diploma, Graphics & Web Development — Hi Tech Animation",
+    body: "The world shut down — exactly the right amount of free time to go all in. Made design formal and learnt the vocabulary for things I was already doing instinctively. The real curriculum was still rebuilding every app on my phone.",
+    tags: ["visual design", "web fundamentals"] },
+  { when: "2016 — 2019", kicker: "The unconventional foundation", role: "BA Political Science — University of Calcutta",
+    body: "Not design school. Better, arguably. Three years studying how systems, power and people interact — which is what UX is about, just with fewer Figma frames.",
+    tags: ["systems thinking", "human behaviour", "stakeholder dynamics"] },
+  { when: "2014", kicker: "Where it started", role: "Class 11. First Android phone. No going back.",
+    body: "Decided the default launcher was unacceptable and spent more time on the home screen than on boards. In hindsight, early-stage UX research.",
+    tags: ["android launchers", "zero formal training", "100% instinct"] }
+];
+
+
+const CASE_ACCENT = {};
+
+const CLIENT_LOGOS = {
+  "PNB MetLife": "../../uploads/pnb.png",
+  "Kotak Life": "../../uploads/Kotak.png",
+  "Toyota Financial Services": "../../uploads/Toyota.png",
+  "Edelweiss Life Insurance": "../../uploads/edel.png",
+  "TATA": "../../uploads/TATA.png",
+  "Maruti Suzuki": "../../uploads/Maruti.png"
+};
+
+const CASES_V2 = window.CASES_V2 || {};
+
+const CASES = {
+  kriyam: {
+    name: "Kriyam.ai — field verification platform",
+    tag: "BFSI · Web & Mobile",
+    title: "Built for trust. Designed for scale.",
+    lede: "Insurance field verification runs on WhatsApp forwards, phone calls and paper. Kriyam.ai replaces that with a secure, compliant, fully auditable platform — so agencies get control, speed and confidence at every step.",
+    hero: "",
+    facts: [
+      { k: "Industry", v: "Banking, Financial Services & Insurance" },
+      { k: "Platform", v: "Web dashboard + field mobile app" },
+      { k: "My role", v: "Lead product designer — research to handoff" },
+      { k: "Team", v: "PM, 4 engineers, ops SMEs" }
+    ],
+    sections: [
+      { h: "The problem", paras: [
+        "Verification is the moment an insurance claim becomes trustworthy or doesn't. In practice it was the least visible part of the chain: cases assigned over calls, evidence collected on personal phones, reports typed up hours later from memory. Nobody could prove who did what, when, or where.",
+        "Two audiences with opposite needs sat on either side of that gap. Agency operations wanted allocation, oversight and an audit trail. Field agents wanted to finish a case in the twelve minutes they get at a doorstep, often on patchy network."
+      ] },
+      { h: "Research", paras: [
+        "I shadowed field verifications and sat in on allocation shifts before drawing anything. The pattern that mattered: agents weren't resisting process, they were routing around a process that assumed a desk."
+      ], bullets: [
+        "Interviews with ops managers, QC reviewers and field agents across three agencies",
+        "Workflow mapping of the existing case lifecycle, including the informal shortcuts",
+        "Compliance requirements read as design constraints, not paperwork"
+      ] },
+      { h: "Design approach", paras: [
+        "One case object, two very different surfaces on top of it. The dashboard is dense and comparative — allocation, ageing, exceptions. The mobile app is a single-column, one-decision-at-a-time capture flow that works offline and syncs when it can."
+      ], bullets: [
+        "Evidence capture with timestamp, geotag and integrity indicators built into the step, never added later",
+        "Status language written for ops, QC and agents to read the same way",
+        "A design system covering dense tables, forms and field components on a shared token set"
+      ], img: "" },
+      { h: "Outcome", paras: [
+        "Verification became a traceable process instead of a trust exercise. Ops can see every case's state and history without a phone call, QC reviews from evidence rather than narrative, and agents complete cases inside the visit instead of after it.",
+        "The system now carries new case types without new design — the part I'm proudest of."
+      ] }
+    ]
+  },
+  proteger: {
+    name: "Proteger — smart factory operations",
+    tag: "Manufacturing · Web, Tablet & Mobile",
+    title: "Building tomorrow's smart factories",
+    lede: "End-to-end operational intelligence for manufacturers: machine state, downtime, quality and shift performance in one place. Designed with factory workers, built for speed.",
+    hero: "",
+    facts: [
+      { k: "Industry", v: "Manufacturing & heavy industries" },
+      { k: "Platform", v: "Web, shop-floor tablet, mobile" },
+      { k: "My role", v: "Product design lead" },
+      { k: "Context", v: "Shared devices, gloves, noise, low light" }
+    ],
+    sections: [
+      { h: "The problem", paras: [
+        "Plants already had data — in machine logs, in spreadsheets, in a supervisor's head. What they didn't have was a shared picture at the moment something went wrong. Downtime was explained the next morning instead of resolved that hour."
+      ] },
+      { h: "Designing for the floor", paras: [
+        "The shop floor is a hostile design environment and that decided most of the interface. Tablets are shared and wall-mounted, hands are gloved, glances are three seconds long."
+      ], bullets: [
+        "Large hit targets and status legible from two metres away",
+        "Colour never carrying meaning alone — shape and label do too",
+        "Downtime logging in two taps, because a three-tap version doesn't get logged"
+      ] },
+      { h: "The management view", paras: [
+        "Plant heads got the opposite treatment: a comparative dashboard across lines and shifts, with drill-down from an anomaly to the machine event that caused it. Same data model, different reading distance."
+      ], img: "" },
+      { h: "Outcome", paras: [
+        "Supervisors stopped assembling the daily picture by hand, and downtime conversations moved from blame to cause. The tablet interface is the one operators actually use — the test I care about."
+      ] }
+    ]
+  },
+  goodbook: {
+    name: "GoodBook — attendance, payroll & HR",
+    tag: "Enterprise HR · Web & Mobile",
+    title: "Attendance, payroll and HR — beautifully simple",
+    lede: "From check-in to payslip, everything a team needs in one place. An HR platform people are required to open, redesigned so they don't dread it.",
+    hero: "",
+    facts: [
+      { k: "Industry", v: "Enterprise HR & workforce management" },
+      { k: "Platform", v: "Web application + mobile apps" },
+      { k: "My role", v: "End-to-end product design" },
+      { k: "Users", v: "Employees, managers, HR & payroll admins" }
+    ],
+    sections: [
+      { h: "The problem", paras: [
+        "HR software is used by three groups with almost nothing in common. An employee opens it four times a month and needs one answer fast. A manager approves in batches. Payroll admins live inside it for two days a month and need precision above all.",
+        "Most platforms design for the admin and let everyone else suffer. That's where the support tickets come from."
+      ] },
+      { h: "Approach", paras: [
+        "I split the product by frequency of use rather than by module. Employees get a short, self-explanatory surface. Admins get density, keyboard flow and bulk actions."
+      ], bullets: [
+        "Check-in reduced to one confirmed action with an unmistakable state",
+        "Leave and regularisation flows that state the rule they're applying, in plain language",
+        "A payroll run built as a reviewable sequence with visible exceptions before anything is finalised"
+      ] },
+      { h: "Systemising it", paras: [
+        "Attendance, leave, payroll and profiles share one component set — tables, filters, status pills, approval sheets — so a new module ships looking like the product instead of like a bolt-on."
+      ], img: "" },
+      { h: "Outcome", paras: [
+        "Routine employee tasks stopped needing an explanation, and payroll gained a review step it previously performed on faith. The same design language now absorbs new HR modules without a redesign."
+      ] }
+    ]
+  },
+  buseit: {
+    name: "Buseit — trust-first resale marketplace",
+    tag: "C2C Marketplace · iOS & Android",
+    title: "Buy it. Use it. Sell it.",
+    lede: "A self-initiated concept: a resale marketplace for India built around the real blocker in second-hand commerce — not discovery, but trust.",
+    hero: "",
+    facts: [
+      { k: "Type", v: "Self-initiated concept / MVP" },
+      { k: "Platform", v: "iOS & Android, mobile-first" },
+      { k: "My role", v: "Research, product design, prototype" },
+      { k: "Focus", v: "Fraud, friction and fear" }
+    ],
+    sections: [
+      { h: "Why", paras: [
+        "Indian resale doesn't lack supply or demand. It lacks a reason to believe the stranger on the other side. Buyers fear fakes and no-shows; sellers fear time-wasters and payment games. Both hedge, and most deals die in chat."
+      ] },
+      { h: "The bet", paras: [
+        "If trust is the product, it can't be a badge added at the end — it has to be visible at every step of the transaction."
+      ], bullets: [
+        "Listings that make condition explicit and comparable instead of optimistic",
+        "Identity and history surfaced where the decision actually happens, not on a profile page",
+        "Payment held until handover, with the state of the deal legible to both sides",
+        "A dispute path designed before launch, because it's the moment trust is won or lost"
+      ], img: "" },
+      { h: "What I learnt", paras: [
+        "Testing the prototype with buyers and sellers showed the friction people accept is the friction they understand. Extra steps that visibly protect them increased confidence; invisible ones just felt slow.",
+        "It stays in the lab for now — a concept I use to pressure-test how far interface can carry trust."
+      ] }
+    ]
+  }
+};
+
+/* Overlay admin edits onto a built-in case object (objects merge, arrays merge by index). */
+function mergeDetail(base, ov) {
+  if (!ov) return base;
+  const out = Array.isArray(base) ? base.slice() : { ...base };
+  Object.keys(ov).forEach((k) => {
+    const v = ov[k];
+    if (v && typeof v === "object" && base && typeof base[k] === "object" && base[k] !== null) out[k] = mergeDetail(base[k], v);
+    else if (v !== undefined && v !== null && v !== "") out[k] = v;
+  });
+  return out;
+}
+
+/* Which detail layout an entry uses. Duplicates inherit through their format field. */
+const NATIVE_FORMAT = { workspace: "longform", buseit: "mvp", kriyam: "product", proteger: "product", goodbook: "product" };
+function entryOf(id) {
+  const list = window.CMS ? window.CMS.projects() : [];
+  return list.filter((p) => p.id === id)[0] || null;
+}
+function formatOf(id) {
+  const e = entryOf(id);
+  return (e && e.format) || NATIVE_FORMAT[(e && e.source) || id] || null;
+}
+function sourceOf(id) {
+  const e = entryOf(id);
+  return (e && e.source) || id;
+}
+
+/* Each case study gets its own address: #/works/<case-study-title> */
+function caseSlug(t) {
+  return String(t || "").toLowerCase().replace(/[’']/g, "").replace(/&/g, "and")
+    .replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+}
+function routeFor(id) {
+  const e = entryOf(id);
+  return "#/works/" + caseSlug((e && e.title) || id);
+}
+function idFromRoute(hash) {
+  const m = /^#\/works\/(.+)$/.exec(String(hash || "").replace(/\/$/, ""));
+  if (!m) return null;
+  const want = decodeURIComponent(m[1]).toLowerCase();
+  const list = (window.CMS ? window.CMS.projects() : []).concat(Object.values(PROJECTS));
+  /* Match every spelling a link may carry: the stored slug, both slug functions, or the raw id. */
+  const hit = list.filter((x) => x.slug === want || caseSlug(x.title) === want || slugify(x.title) === want || x.id === want)[0];
+  return hit ? hit.id : null;
+}
+
+const isVideoSrc = (s) => /\.(mp4|webm|mov)(\?|$)/i.test(String(s || ""));
+
+const CASE_ORDER = ["kriyam", "proteger", "goodbook", "buseit", "workspace"];
+
+/* Case copy is authored with page-relative asset paths; these pages live one level
+   down, so normalise every uploads/../../assets/ reference to a root-absolute URL. */
+function deepAbs(v) {
+  if (typeof v === "string") return /^(uploads|assets)\//.test(v) ? "../../" + v : v;
+  if (Array.isArray(v)) return v.map(deepAbs);
+  if (v && typeof v === "object") { const o = {}; Object.keys(v).forEach((k) => { o[k] = deepAbs(v[k]); }); return o; }
+  return v;
+}
+Object.keys(CASES_V2).forEach((k) => { CASES_V2[k] = deepAbs(CASES_V2[k]); });
+Object.keys(CASES).forEach((k) => { CASES[k] = deepAbs(CASES[k]); });
+Object.keys(CLIENT_LOGOS).forEach((k) => { CLIENT_LOGOS[k] = deepAbs(CLIENT_LOGOS[k]); });
+
+class Component extends DCLogic {
+  state = { cmsTick: 0 };
+
+  /* The page passes its own slug; match it the same way the old hash route did. */
+  viewId() {
+    const requested = new URLSearchParams(location.search).get('entry');
+    const candidate = requested && entryOf(requested);
+    const want = candidate && formatOf(requested) === NATIVE_FORMAT["kriyam"] ? requested : "kriyam";
+    const list = (window.CMS ? window.CMS.projects() : []).concat(Object.values(PROJECTS));
+    const hit = list.filter((x) => x.slug === want || caseSlug(x.title) === want || slugify(x.title) === want || x.id === want)[0];
+    return hit ? hit.id : want;
+  }
+
+  caseParallax = () => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) { this.cRaf = null; return; }
+    const vh = window.innerHeight;
+    document.querySelectorAll("[data-parallax]").forEach((img) => {
+      if (!img.parentElement) return;
+      const box = img.parentElement.getBoundingClientRect();
+      if (box.bottom < -200 || box.top > vh + 200) return;
+      const p = (box.top + box.height / 2 - vh / 2) / vh;
+      img.style.transform = "translate3d(0," + (-Math.max(-1, Math.min(1, p)) * 2.6).toFixed(2) + "%,0)";
+    });
+    this.cRaf = null;
+  };
+  caseScroll = () => { if (!this.cRaf) this.cRaf = requestAnimationFrame(this.caseParallax); };
+
+
+  hydrateImgs() {
+    document.querySelectorAll("img[data-lazysrc]").forEach((el) => {
+      const v = el.getAttribute("data-lazysrc");
+      if (!v || v.indexOf("{{") > -1) return;
+      if (el.getAttribute("src") !== v) el.setAttribute("src", v);
+    });
+  }
+
+  scanReveal() {
+    if (!this.io) return;
+    document.querySelectorAll("[data-reveal]:not(.in)").forEach((el) => this.io.observe(el));
+  }
+
+
+scanVideos() {
+    if (!this.vio) {
+      this.vio = new IntersectionObserver((es) => {
+        es.forEach((e) => {
+          const v = e.target;
+          if (e.isIntersecting) {
+            this.loadVideo(v);
+            const p = v.play(); if (p && p.catch) p.catch(() => {});
+            if (window.CMS && !v.dataset.tracked) { v.dataset.tracked = "1"; window.CMS.track("video", (v.dataset.vsrc || "").split("/").pop()); }
+          } else { v.pause(); }
+        });
+      }, { threshold: 0.25, rootMargin: "200px 0px" });
+    }
+    document.querySelectorAll("video[data-autoplay-in-view]").forEach((v) => {
+      const url = v.getAttribute("data-vsrc") || "";
+      /* Re-arm when the CMS points the slot at a different clip. */
+      if (v.dataset.armed && v.dataset.armed !== url) {
+        v.pause();
+        v.removeAttribute("poster");
+        while (v.firstChild) v.removeChild(v.firstChild);
+        v.removeAttribute("src");
+        if (v.dataset.blobUrl) { URL.revokeObjectURL(v.dataset.blobUrl); delete v.dataset.blobUrl; }
+        delete v.dataset.armed;
+        delete v.dataset.loaded;
+        delete v.dataset.tracked;
+      }
+      if (v.dataset.armed) return;
+      if (!url) return;
+      v.dataset.armed = url;
+      v.muted = true;
+      v.loop = true;
+      v.playsInline = true;
+      v.controls = false;
+      v.preload = "none";
+      v.disablePictureInPicture = true;
+      v.setAttribute("muted", "");
+      v.setAttribute("loop", "");
+      v.setAttribute("playsinline", "");
+      /* Poster is the clip's own first frame, same basename: only attached if it exists,
+         so a missing one degrades to the element's background rather than a broken image. */
+      const poster = url.replace(/\.(mp4|webm|mov)(\?.*)?$/i, "") + ".jpg";
+      const probe = new Image();
+      probe.onload = () => { if (v.dataset.armed === url) v.setAttribute("poster", poster); };
+      probe.src = poster;
+      this.vio.observe(v);
+    });
+  }
+
+  /* Loaded on first approach, never at parse time: nothing downloads until the slot is
+     near the viewport. WebM is preferred when the browser plays it and the file exists;
+     otherwise the authored file. Bytes come through fetch + Blob URL because some hosts
+     (and this preview) refuse direct media URLs on a <video> element — a plain src is
+     kept as the last resort so a normal server still works if fetch is blocked. */
+  loadVideo(v) {
+    if (v.dataset.loaded) return;
+    const url = v.getAttribute("data-vsrc") || "";
+    if (!url) return;
+    v.dataset.loaded = "1";
+    const base = url.replace(/\.(mp4|webm|mov)(\?.*)?$/i, "");
+    const wantsWebm = !/\.webm(\?|$)/i.test(url) && !!v.canPlayType && !!v.canPlayType("video/webm");
+    const queue = wantsWebm ? [base + ".webm", url] : [url];
+
+    const mount = (blobUrl) => {
+      if (v.dataset.blobUrl) URL.revokeObjectURL(v.dataset.blobUrl);
+      v.dataset.blobUrl = blobUrl;
+      v.src = blobUrl;
+      v.load();
+      const p = v.play(); if (p && p.catch) p.catch(() => {});
+    };
+
+    const tryNext = (i) => {
+      if (i >= queue.length) { v.src = url; v.load(); return; }
+      fetch(queue[i])
+        .then((r) => (r.ok ? r.blob() : Promise.reject(new Error(String(r.status)))))
+        .then((b) => mount(URL.createObjectURL(b)))
+        .catch(() => tryNext(i + 1));
+    };
+    tryNext(0);
+  }
+
+  applyCaseAccent(view) {
+    const el = document.getElementById("__case-accent") || document.createElement("style");
+    el.id = "__case-accent";
+    const c = view && (CASE_ACCENT[view] || CASE_ACCENT[sourceOf(view)]);
+    el.textContent = c
+      ? '[data-case-theme] { --color-accent: ' + c + '; --color-accent-100: color-mix(in srgb, ' + c + ' 12%, #fff);'
+        + ' --color-accent-200: color-mix(in srgb, ' + c + ' 42%, #fff);'
+        + ' --color-accent-300: color-mix(in srgb, ' + c + ' 68%, #fff);'
+        + ' --color-accent-900: color-mix(in srgb, ' + c + ' 22%, #06070c); }'
+      : "";
+    document.head.appendChild(el);
+  }
+
+  componentDidUpdate() {
+    const v = this.viewId();
+    if (window.CMS) { window.CMS.applyText(document, v); window.CMS.applyMedia(document, v); }
+    this.scanReveal();
+    this.caseParallax();
+    this.scanVideos();
+    this.hydrateImgs();
+  }
+
+  componentDidMount() {
+    const v = this.viewId();
+    if (window.CMS) {
+      window.CMS.applyText(document, v);
+      window.CMS.applyMedia(document, v);
+      window.CMS.captureDefaults();
+      window.CMS.setCaseDefaults(CASES_V2);
+      window.CMS.setPage(v);
+      window.CMS.applySeo(v);
+      window.CMS.startTracking();
+      window.CMS.track("case_open", v);
+      this.cmsOff = window.CMS.onChange(() => {
+        window.CMS.applyText(document, v);
+        window.CMS.applyMedia(document, v);
+        window.CMS.applySeo(v);
+        this.setState((s) => ({ cmsTick: (s.cmsTick || 0) + 1 }));
+      });
+    }
+    this.applyCaseAccent(v);
+
+    this.io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); this.io.unobserve(e.target); } });
+    }, { rootMargin: "0px 0px -8% 0px", threshold: 0.08 });
+    this.scanReveal();
+    this.scanVideos();
+    this.hydrateImgs();
+    window.addEventListener("scroll", this.caseScroll, { passive: true });
+    window.addEventListener("resize", this.caseScroll);
+    this.caseParallax();
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("scroll", this.caseScroll);
+    window.removeEventListener("resize", this.caseScroll);
+    if (this.io) this.io.disconnect();
+    if (this.vio) this.vio.disconnect();
+    if (this.cmsOff) this.cmsOff();
+  }
+
+  renderVals() {
+    const view = this.viewId();
+    const fmt = formatOf(view) || NATIVE_FORMAT[view] || null;
+    const srcId = sourceOf(view);
+    const dbase = CASES_V2[srcId] ? mergeDetail(CASES_V2[srcId], window.CMS ? window.CMS.detail(view) : null) : null;
+    const raw = CASES[view] || CASES[srcId] || null;
+
+    const order = (window.CMS ? window.CMS.projects().map((x) => x.id) : []);
+    const seq = order.length ? order : CASE_ORDER;
+    const nextId = seq[(seq.indexOf(view) + 1 + seq.length) % seq.length];
+    const nextEntry = nextId ? entryOf(nextId) : null;
+    const nextName = nextEntry ? nextEntry.title
+      : (nextId ? (CASES[nextId] ? CASES[nextId].name : (PROJECTS[nextId] ? PROJECTS[nextId].title : "")) : "");
+
+    const cs = raw ? {
+      ...raw,
+      name: view !== srcId ? ((entryOf(view) || {}).title || raw.name) : raw.name,
+      nextName: nextName,
+      sections: raw.sections.map((s) => ({
+        ...s,
+        paras: s.paras || [],
+        bullets: s.bullets || [],
+        hasBullets: !!(s.bullets && s.bullets.length),
+        hasImage: !!s.img,
+        img: s.img || ""
+      }))
+    } : { name: "", tag: "", title: "", lede: "", hero: "", facts: [], sections: [], nextName: nextName };
+
+    return {
+      never: false,
+      stopClick: (e) => { e.stopPropagation(); },
+      nextHref: (window.CMS && window.CMS.pageFor(nextId)) || "../../#work",
+      wsNext: nextName,
+      cs,
+      isBuseit: fmt === "mvp",
+      isWorkspace: fmt === "longform",
+      isGeneric: fmt === "product" && !!dbase,
+      noLayout: fmt !== "mvp" && fmt !== "longform" && !(fmt === "product" && !!dbase),
+      csTitle: (entryOf(view) || {}).title || (raw ? raw.name : "") || "",
+      personaPrev: () => { const r = document.querySelector(".persona-rail"); if (r) r.scrollBy({ left: -r.clientWidth * 0.72, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" }); },
+      personaNext: () => { const r = document.querySelector(".persona-rail"); if (r) r.scrollBy({ left: r.clientWidth * 0.72, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" }); },
+      d: dbase ? {
+        ...dbase,
+        slotHero: srcId + "-hero",
+        heroSrc: dbase.heroSrc || "",
+        heroIsVideo: isVideoSrc(dbase.heroSrc),
+        heroIsPhoto: !isVideoSrc(dbase.heroSrc),
+        slotOutcome: srcId + "-outcome",
+        outcomeSrc: dbase.outcomeSrc || "",
+        outcomeIsVideo: isVideoSrc(dbase.outcomeSrc),
+        outcomeIsPhoto: !isVideoSrc(dbase.outcomeSrc),
+        impact: dbase.impact.map((i, n) => ({
+          ...i,
+          slot: srcId + "-impact-" + n,
+          src: i.src || "",
+          isVideo: isVideoSrc(i.src),
+          notVideo: !isVideoSrc(i.src)
+        })),
+        clients: dbase.clients.map((c, n) => ({ name: c, slot: srcId + "-client-" + n, src: CLIENT_LOGOS[c] || "" })),
+        team: dbase.team.map((m) => {
+          const r = m.r.toLowerCase();
+          const icon = r.indexOf("product manager") > -1 ? "../../uploads/pm.svg"
+            : r.indexOf("quality") > -1 || r.indexOf("qa") > -1 ? "../../uploads/qa.svg"
+            : r.indexOf("designer") > -1 ? "../../uploads/des.svg"
+            : "../../uploads/dev.svg";
+          return { ...m, icon, hasIcon: true };
+        }),
+        hasClients: !!(dbase.clients || []).length
+      } : { name: "", statLead: "", statRest: "", lede: "", links: [], slotHero: "", slotOutcome: "", heroIsVideo: false, heroIsPhoto: true, outcomeIsVideo: false, outcomeIsPhoto: true, facts: [], impact: [], overview: [], role: [], team: [], clientsLabel: "", clients: [], hasClients: false, ctaLinks: [] },
+    };
+  }
+}
+</script>
+</body>
+</html>
