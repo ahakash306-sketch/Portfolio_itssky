@@ -64,6 +64,19 @@ html[data-theme="light"] .evidence-link,html[data-theme="light"] .full-case{colo
 .submit span:last-child{font-size:19px;line-height:1}
 .answer-details{display:flex;flex-wrap:wrap;gap:7px;list-style:none;padding:0;margin:0 0 20px}
 .answer-details li{border:1px solid var(--line);border-radius:999px;padding:7px 11px;color:var(--muted);font-size:10px}
+.answer-catalog{display:grid;gap:26px;margin:4px 0 24px}
+.catalog-section{border-top:1px solid var(--line);padding-top:16px}
+.catalog-section>h3{margin:0 0 15px;font-size:10px;font-weight:500;letter-spacing:.13em;text-transform:uppercase;color:var(--accent)}
+.catalog-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 34px}
+.catalog-group{min-width:0}
+.catalog-group h4{margin:0 0 8px;font-size:13px;font-weight:500;color:#e5e8e1}
+.catalog-group ul{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:5px 12px}
+.catalog-group li{font-size:11px;line-height:1.65;color:var(--muted)}
+.catalog-group li:not(:last-child)::after{content:'·';margin-left:12px;color:#4c514b}
+.tool-shortcut{appearance:none;border:0;padding:0;background:transparent;color:inherit;font:inherit;line-height:inherit;border-bottom:1px solid transparent}
+.tool-shortcut:hover{color:var(--accent);border-bottom-color:currentColor}
+html[data-theme="light"] .catalog-group h4{color:#30352f}
+html[data-theme="light"] .catalog-group li:not(:last-child)::after{color:#b4b8ae}
 .started .entry{position:fixed;left:50%;bottom:0;transform:translateX(-50%);width:min(780px,calc(100% - 40px));padding:20px 0 16px;background:linear-gradient(#0b0c0b00,#0b0c0b 20%);z-index:10}
 .started .entry>.suggestions{display:flex;margin:10px 0 0}
 .started #conversation{padding-bottom:calc(var(--dock-height,180px) + 34px)}
@@ -73,6 +86,9 @@ html[data-theme="light"] .started .entry{background:linear-gradient(#f6f5f000,#f
  .started .entry{width:calc(100% - 24px);padding-bottom:max(10px,env(safe-area-inset-bottom))}
  .started .entry>.suggestions{margin-inline:0}
  .started #conversation{padding-bottom:calc(var(--dock-height,164px) + 28px)}
+ .catalog-grid{grid-template-columns:1fr;gap:17px}
+ .catalog-group ul{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 14px}
+ .catalog-group li:not(:last-child)::after{content:none}
 }
 
 /* Minimal sticky navigation */

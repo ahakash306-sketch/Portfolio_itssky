@@ -13,6 +13,7 @@
   const reset = $('#reset');
   const announcement = $('#announcement');
   const topicMap = new Map(KB.topics.map(topic => [topic.id, topic]));
+  const toolMap = new Map((KB.tools || []).map(tool => [tool.id, tool]));
   const evidenceTopics = new Set([
     'best_work', 'products', 'projects', 'clients', 'impact', 'process',
     'research', 'data', 'measuring_success', 'industries', 'case_studies'
@@ -29,6 +30,7 @@
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '')
     .toLowerCase()
+    .replace(/[’']/g, '')
     .replace(/&/g, ' and ')
     .replace(/[^a-z0-9\s]/g, ' ')
     .replace(/\s+/g, ' ')
@@ -79,7 +81,90 @@
       .sort((a, b) => b.score - a.score);
   }
 
+  function basicIntentTopic(query) {
+    const clean = normalize(query);
+    const intent = (KB.basicIntents || []).find(item => (item.phrases || []).some(phrase => normalize(phrase) === clean));
+    if (!intent) return null;
+    return {
+      id: `conversation_${intent.id}`,
+      question: intent.question,
+      answer: intent.answer,
+      links: [],
+      followUps: intent.followUps || [],
+      followUpLimit: (intent.followUps || []).length
+    };
+  }
+
+  function aliasInQuery(query, alias) {
+    const clean = ` ${normalize(query)} `;
+    return clean.includes(` ${normalize(alias)} `);
+  }
+
+  function isToolQuestion(query) {
+    const clean = normalize(query);
+    return /^(do|did|can|have|are) you\b/.test(clean) ||
+      /\b(know|use|used|worked with|experience with|experience in)\b/.test(clean) ||
+      /^what do you use\b/.test(clean) || /^how do you use\b/.test(clean);
+  }
+
+  function knownToolTopic(query) {
+    const clean = normalize(query);
+    if (!isToolQuestion(clean) && !(KB.tools || []).some(tool => (tool.aliases || []).some(alias => normalize(alias) === clean))) return null;
+
+    let match = null;
+    let matchedLength = -1;
+    (KB.tools || []).forEach(tool => {
+      (tool.aliases || []).forEach(alias => {
+        const normalizedAlias = normalize(alias);
+        if (aliasInQuery(clean, normalizedAlias) && normalizedAlias.length > matchedLength) {
+          match = tool;
+          matchedLength = normalizedAlias.length;
+        }
+      });
+    });
+    return match ? toolTopic(match) : null;
+  }
+
+  function toolTopic(tool) {
+    return {
+      id: `tool_${tool.id}`,
+      question: `Do you use ${tool.name}?`,
+      answer: tool.answer,
+      links: [],
+      followUps: ['tools', 'skills', 'design_systems']
+    };
+  }
+
+  function unknownToolTopic(query) {
+    const clean = normalize(query);
+    const patterns = [
+      /^(?:do|did) you (?:know|use) (.+)$/,
+      /^have you (?:used|worked with) (.+)$/,
+      /^can you use (.+)$/,
+      /^what do you use (.+) for$/,
+      /^do you have experience (?:with|in) (.+)$/
+    ];
+    const result = patterns.map(pattern => clean.match(pattern)).find(Boolean);
+    if (!result) return null;
+    const candidate = result[1].replace(/^(?:a|an|the)\s+/, '').trim();
+    const generic = new Set(['tools', 'software', 'design', 'product design', 'ux', 'user research', 'research', 'analytics', 'data']);
+    if (!candidate || candidate.split(' ').length > 5 || generic.has(candidate)) return null;
+    return {
+      id: 'unknown_tool',
+      question: `Is ${candidate} in your toolkit?`,
+      answer: 'That’s not currently listed in my toolkit. Want to see what I do use?',
+      links: [],
+      followUps: ['tools', 'skills']
+    };
+  }
+
   function detectTopic(query) {
+    const basic = basicIntentTopic(query);
+    if (basic) return basic;
+    const tool = knownToolTopic(query);
+    if (tool) return tool;
+    const unknownTool = unknownToolTopic(query);
+    if (unknownTool) return unknownTool;
     const ranked = rankedTopics(query);
     return ranked[0] && ranked[0].score >= 4.25 ? ranked[0].topic : null;
   }
@@ -136,6 +221,38 @@
     }
   }
 
+  function catalogComponent(catalog) {
+    const catalogNode = make('div', null, 'answer-catalog');
+    catalog.forEach(section => {
+      const sectionNode = make('section', null, 'catalog-section');
+      sectionNode.append(make('h3', section.label));
+      const grid = make('div', null, 'catalog-grid');
+      (section.groups || []).forEach(group => {
+        const groupNode = make('div', null, 'catalog-group');
+        groupNode.append(make('h4', group.heading));
+        const list = make('ul');
+        (group.items || []).forEach(item => {
+          const entry = make('li');
+          if (typeof item === 'object' && item.tool) {
+            const button = make('button', item.label, 'tool-shortcut');
+            button.type = 'button';
+            button.dataset.tool = item.tool;
+            button.setAttribute('aria-label', `Ask about ${item.label}`);
+            entry.append(button);
+          } else {
+            entry.textContent = typeof item === 'string' ? item : item.label;
+          }
+          list.append(entry);
+        });
+        groupNode.append(list);
+        grid.append(groupNode);
+      });
+      sectionNode.append(grid);
+      catalogNode.append(sectionNode);
+    });
+    return catalogNode;
+  }
+
   function shouldShowEvidence(topic) {
     if (evidenceTopics.has(topic.id)) return true;
     return Object.keys(KB.projects).some(id => topic.id === id || topic.id.startsWith(`${id}_`));
@@ -145,6 +262,8 @@
     const answer = make('div', null, 'answer');
     answer.tabIndex = -1;
     answer.append(make('h2', topic.question), make('p', topic.answer, 'short-answer'));
+
+    if (topic.catalog && topic.catalog.length) answer.append(catalogComponent(topic.catalog));
 
     if (topic.details && topic.details.length) {
       const details = make('ul', null, 'answer-details');
@@ -164,7 +283,7 @@
     }
 
     const followUpIds = suggestedTopics || topic.followUps || [];
-    const validFollowUps = followUpIds.map(id => typeof id === 'string' ? topicMap.get(id) : id).filter(Boolean).slice(0, 4);
+    const validFollowUps = followUpIds.map(id => typeof id === 'string' ? topicMap.get(id) : id).filter(Boolean).slice(0, topic.followUpLimit || 4);
     if (validFollowUps.length) {
       const section = make('div', null, 'followup-section');
       section.append(make('p', 'Go deeper', 'response-label'));
@@ -241,6 +360,12 @@
   }
 
   document.addEventListener('click', event => {
+    const toolButton = event.target.closest('[data-tool]');
+    if (toolButton) {
+      const tool = toolMap.get(toolButton.dataset.tool);
+      if (tool) addTurn(`Do you use ${tool.name}?`, toolTopic(tool));
+      return;
+    }
     const button = event.target.closest('[data-topic]');
     if (!button) return;
     const topic = topicMap.get(button.dataset.topic);

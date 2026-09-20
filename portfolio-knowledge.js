@@ -80,6 +80,90 @@
     return { project: id, label: label || 'View case study', evidence: projects[id].proof };
   }
 
+  var basicIntents = [
+    {
+      id: 'greeting',
+      phrases: ['hi', 'hello', 'hey', 'hey there', 'hi akash', 'hello akash', 'good morning', 'good afternoon', 'good evening'],
+      question: 'Hey there',
+      answer: 'Hey! 👋 What would you like to know about my work?',
+      followUps: ['best_work', 'products', 'impact', 'process', 'skills']
+    },
+    {
+      id: 'thanks',
+      phrases: ['thanks', 'thank you', 'cool thanks', 'got it', 'helpful'],
+      question: 'You’re welcome',
+      answer: 'Glad that helped. What else would you like to explore?',
+      followUps: ['best_work', 'products', 'impact', 'process']
+    },
+    {
+      id: 'how_are_you',
+      phrases: ['how are you', 'how is it going', 'hows it going', 'what is up', 'whats up'],
+      question: 'Doing well',
+      answer: 'Doing good. More importantly, I’m here to talk about the work. What are you curious about?',
+      followUps: ['best_work', 'products', 'process', 'skills']
+    },
+    {
+      id: 'goodbye',
+      phrases: ['bye', 'goodbye', 'see you', 'thats all', 'that is all', 'im done', 'i am done'],
+      question: 'See you',
+      answer: 'Thanks for stopping by. If something catches your eye later, you know where to find me.',
+      followUps: []
+    },
+    {
+      id: 'help',
+      phrases: ['help', 'what can i ask', 'what can you tell me', 'what do you know', 'what should i ask'],
+      question: 'Here’s what you can explore',
+      answer: 'You can ask about my work, products I’ve designed, impact, design process, skills, tools, clients, experience, or individual projects.',
+      followUps: ['best_work', 'products', 'impact', 'process', 'skills']
+    }
+  ];
+
+  var tools = [
+    { id: 'figma', name: 'Figma', aliases: ['figma'], answer: 'Yes. Figma is one of my primary design tools. I use it across product design, prototyping, design systems, and developer handoff.' },
+    { id: 'framer', name: 'Framer', aliases: ['framer'], answer: 'Yes. Framer is part of my design and prototyping toolkit.' },
+    { id: 'webflow', name: 'Webflow', aliases: ['webflow'], answer: 'Yes. Webflow is part of my toolkit.' },
+    { id: 'photoshop', name: 'Adobe Photoshop', aliases: ['adobe photoshop', 'photoshop', 'ps'], answer: 'Yes. I use Adobe Photoshop as part of my broader visual design toolkit.' },
+    { id: 'illustrator', name: 'Adobe Illustrator', aliases: ['adobe illustrator', 'illustrator'], answer: 'Yes. Adobe Illustrator is part of my visual design toolkit.' },
+    { id: 'indesign', name: 'Adobe InDesign', aliases: ['adobe indesign', 'indesign'], answer: 'Yes. Adobe InDesign is part of my toolkit.' },
+    { id: 'dimension', name: 'Adobe Dimension', aliases: ['adobe dimension', 'dimension', 'dimensions'], answer: 'Yes. Adobe Dimension is part of my toolkit.' },
+    { id: 'premiere', name: 'Adobe Premiere Pro', aliases: ['adobe premiere pro', 'premiere pro', 'adobe premiere', 'premiere'], answer: 'Yes. Adobe Premiere Pro is part of my creative toolkit.' },
+    { id: 'after_effects', name: 'Adobe After Effects', aliases: ['adobe after effects', 'after effects', 'ae'], answer: 'Yes. Adobe After Effects is part of my motion and creative toolkit.' },
+    { id: 'audition', name: 'Adobe Audition', aliases: ['adobe audition', 'audition'], answer: 'Yes. Adobe Audition is part of my creative toolkit.' },
+    { id: 'codex', name: 'Codex', aliases: ['codex'], answer: 'Yes. Codex is part of my AI-assisted workflow, particularly when turning ideas and designs into working prototypes or experiences.' },
+    { id: 'claude_code', name: 'Claude Code', aliases: ['claude code', 'claude'], answer: 'Yes. I use Claude Code as part of my AI-assisted design and prototyping workflow.' },
+    { id: 'lovable', name: 'Lovable', aliases: ['lovable'], answer: 'Yes. Lovable is part of my AI-assisted design and prototyping toolkit.' },
+    { id: 'relume_ai', name: 'Relume AI', aliases: ['relume ai', 'relume'], answer: 'Yes. Relume AI is part of my AI-assisted toolkit.' },
+    { id: 'figma_make', name: 'Figma Make', aliases: ['figma make', 'figma ai'], answer: 'Yes. Figma Make is part of my AI-assisted design and prototyping toolkit.' },
+    { id: 'clarity', name: 'Microsoft Clarity', aliases: ['microsoft clarity', 'clarity'], answer: 'Yes. I use Microsoft Clarity to understand user behaviour and identify friction after a product is live.' },
+    { id: 'hotjar', name: 'Hotjar', aliases: ['hotjar'], answer: 'Yes. I’ve used Hotjar for behavioural insights and understanding how users interact with an experience.' },
+    { id: 'zoho', name: 'Zoho', aliases: ['zoho'], answer: 'Yes. Zoho is part of my toolkit.' },
+    { id: 'html', name: 'HTML', aliases: ['html'], answer: 'Yes. I use HTML for lightweight implementation and working prototypes.' },
+    { id: 'css', name: 'CSS', aliases: ['css'], answer: 'Yes. I use CSS for lightweight implementation and working prototypes.' }
+  ];
+
+  var skillCatalog = [
+    {
+      label: 'Skills',
+      groups: [
+        { heading: 'Product & UX', items: ['Product Design', 'User Research', 'UX Strategy', 'Information Architecture', 'Wireframing', 'Prototyping', 'Usability Testing', 'Design Systems', 'Accessibility', 'Analytics-driven Design'] },
+        { heading: 'Collaboration', items: ['Stakeholder Collaboration', 'Cross-functional Team Leadership', 'Developer Handoff'] }
+      ]
+    },
+    {
+      label: 'Tools',
+      groups: [
+        { heading: 'Design', items: [{ label: 'Figma', tool: 'figma' }, { label: 'Framer', tool: 'framer' }, { label: 'Webflow', tool: 'webflow' }] },
+        { heading: 'Adobe Creative', items: [{ label: 'Photoshop', tool: 'photoshop' }, { label: 'Illustrator', tool: 'illustrator' }, { label: 'InDesign', tool: 'indesign' }, { label: 'Dimension', tool: 'dimension' }, { label: 'Premiere Pro', tool: 'premiere' }, { label: 'After Effects', tool: 'after_effects' }, { label: 'Audition', tool: 'audition' }] },
+        { heading: 'AI & Vibe Coding', items: [{ label: 'Codex', tool: 'codex' }, { label: 'Claude Code', tool: 'claude_code' }, { label: 'Lovable', tool: 'lovable' }, { label: 'Relume AI', tool: 'relume_ai' }, { label: 'Figma Make', tool: 'figma_make' }] },
+        { heading: 'Analytics', items: [{ label: 'Microsoft Clarity', tool: 'clarity' }, { label: 'Hotjar', tool: 'hotjar' }] },
+        { heading: 'Technical', items: [{ label: 'HTML', tool: 'html' }, { label: 'CSS', tool: 'css' }] },
+        { heading: 'Other', items: [{ label: 'Zoho', tool: 'zoho' }] }
+      ]
+    }
+  ];
+
+  var toolCatalog = [{ label: 'Tools', groups: skillCatalog[1].groups }];
+
   var topics = [
     {
       id: 'best_work', question: 'Show me your best work', shortLabel: 'Best work', primary: true,
@@ -117,10 +201,10 @@
       id: 'skills', question: 'What are your skills & tools?', shortLabel: 'Skills & tools', primary: true,
       keywords: ['skills', 'strengths', 'capabilities', 'expertise', 'skills and tools'],
       variations: ['what are your skills and tools', 'what are you good at', 'your capabilities'],
-      answer: 'My core strengths are product and UX design, research, strategy, information architecture, prototyping, usability testing, design systems, accessibility, analytics-driven design, stakeholder collaboration, and developer handoff.',
-      details: ['Product & UX design', 'Research & UX strategy', 'Design systems & accessibility', 'Analytics-driven iteration', 'Cross-functional leadership'],
-      links: [projectLink('kriyam'), projectLink('proteger')],
-      followUps: ['tools', 'figma', 'ai_tools', 'design_systems']
+      answer: 'Here’s a quick view of the skills and tools I use across product work.',
+      catalog: skillCatalog,
+      links: [],
+      followUps: ['design_systems', 'process', 'projects']
     },
     {
       id: 'projects', question: 'Show me your projects', shortLabel: 'Projects',
@@ -230,10 +314,10 @@
       id: 'tools', question: 'What tools do you use?', shortLabel: 'Tools',
       keywords: ['tools', 'software', 'apps', 'design tools', 'what do you use'],
       variations: ['what tools do you use', 'tools?', 'what software do you know', 'your design tools', 'do you use figma', 'software you work with'],
-      answer: 'My toolkit spans design, prototyping, motion, analytics, and lightweight implementation. I choose tools based on the problem and the team rather than treating any one tool as the process.',
-      details: ['Figma · Framer · Webflow', 'Illustrator · Photoshop · Premiere Pro · After Effects', 'Microsoft Clarity · Hotjar', 'Zoho · basic HTML & CSS'],
-      links: [projectLink('buseit', 'See a rapid high-fidelity workflow')],
-      followUps: ['figma', 'ai_tools', 'design_systems']
+      answer: 'My toolkit spans design, prototyping, motion, analytics, AI-assisted building, and lightweight implementation.',
+      catalog: toolCatalog,
+      links: [],
+      followUps: ['skills', 'ai_tools', 'design_systems']
     },
     {
       id: 'figma', question: 'Do you use Figma?', shortLabel: 'Figma',
@@ -305,6 +389,8 @@
   window.PORTFOLIO_KNOWLEDGE = {
     primaryIds: ['best_work', 'products', 'impact', 'process', 'skills'],
     projects: projects,
-    topics: topics
+    topics: topics,
+    basicIntents: basicIntents,
+    tools: tools
   };
 })();
