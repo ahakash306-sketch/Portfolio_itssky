@@ -312,7 +312,7 @@
       keywords: ['background', 'about you', 'who are you', 'education', 'your story'],
       variations: ['what is your background', 'tell me about yourself', 'who is akash'],
       answer: 'My path into product design began with political science and a habit of questioning how systems work. That perspective now helps me examine incentives, constraints, and human behaviour before shaping a product response.',
-      links: [{ href: 'explore.html#about', label: 'Read the full background' }],
+      links: [{ href: 'index.html#about', label: 'Read the full background' }],
       followUps: ['experience', 'design_strength', 'process']
     },
     {
@@ -409,7 +409,7 @@
       keywords: ['ai tools', 'vibe coding', 'codex', 'claude', 'lovable', 'relume', 'figma make'],
       variations: ['which ai tools do you use', 'do you use ai', 'your vibe coding tools'],
       answer: 'For AI-assisted exploration and building I use Codex, Claude, Lovable, Relume AI, and Figma Make. I use them to accelerate research synthesis, prototyping, content structure, and implementation while keeping human review and product judgment in the loop.',
-      links: [{ href: 'explore.html#work', label: 'Explore the portfolio' }],
+      links: [{ href: 'index.html#work', label: 'Explore the portfolio' }],
       followUps: ['tools', 'figma', 'process']
     },
     {

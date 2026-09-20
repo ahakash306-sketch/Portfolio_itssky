@@ -9,8 +9,13 @@ html .shell > header a { position: relative; display: inline-flex; align-items: 
 html .shell > header a::after { content: ''; position: absolute; inset: auto 0 6px; height: 1px; background: currentColor; transform: scaleX(0); transform-origin: left; transition: transform .22s ease; }
 html .shell > header a:is(:hover, :focus-visible, [aria-current="location"]) { color: #f2f0ed !important; }
 html .shell > header a:is(:hover, :focus-visible, [aria-current="location"])::after { transform: scaleX(1); }
-html .shell > header .conversation-return { min-height: 44px; flex: none; }
+html .shell > header .conversation-return { min-height: 44px; flex: none; padding-inline: 15px !important; gap: 8px; color: #172018 !important; background: #dce7d7 !important; border-color: #dce7d7 !important; font-weight: 600; letter-spacing: .07em; box-shadow: 0 8px 22px rgba(0,0,0,.28); }
 html .shell > header .conversation-return::after { display: none; }
+html .shell > header .conversation-return:is(:hover, :focus-visible) { color: #172018 !important; background: #bcd1b2 !important; border-color: #cfe0c8 !important; transform: translateY(-1px); box-shadow: 0 11px 26px rgba(0,0,0,.38); }
+html .shell > header .conversation-return svg { flex: none; }
+.conversation-label-short { display: none; }
+.mobile-nav-toggle { display: none; }
+html .shell > header > .mobile-conversation-return { display: none !important; }
 html .shell > header button { width: 44px !important; height: 44px !important; flex: none; }
 html .shell #top { min-height: min(780px, calc(100svh - 72px)) !important; }
 html .shell #top h1 { font-size: clamp(26px, 2.9vw, 42px) !important; }
@@ -36,9 +41,24 @@ html .shell #top h1 { font-size: clamp(26px, 2.9vw, 42px) !important; }
 }
 @media (max-width: 600px) {
   html .shell { width: calc(100% - 32px) !important; }
-  html .shell > header { justify-content: center !important; }
-  html .shell > header > div { width: 100%; justify-content: space-between; gap: 4px 10px !important; }
-  html .shell > header a { font-size: 11px !important; letter-spacing: .045em; }
+  html .shell > header { justify-content: flex-end !important; min-height: 68px; overflow: visible; }
+  html .shell > header > .mobile-conversation-return { display: inline-flex !important; align-items: center; justify-content: center; gap: 7px; min-height: 44px; padding: 0 13px; border: 1px solid #dce7d7; border-radius: 999px; background: #dce7d7; color: #172018 !important; font-family: 'Google Sans Flex', system-ui, sans-serif; font-size: 10px !important; font-weight: 600; letter-spacing: .055em; text-transform: uppercase; box-shadow: 0 8px 22px rgba(0,0,0,.28); }
+  html .shell > header > .mobile-conversation-return::after { display: none; }
+  html .shell > header > .mobile-conversation-return:is(:hover,:focus-visible) { background: #bcd1b2; border-color: #cfe0c8; color: #172018 !important; }
+  .mobile-conversation-return svg { width: 16px; height: 16px; flex: none; }
+  html .shell > header > .primary-navigation { position: absolute; top: calc(100% + 8px); right: 0; width: min(300px, calc(100vw - 32px)); display: flex !important; flex-direction: column; align-items: stretch; gap: 0 !important; padding: 10px; border: 1px solid #292925; border-radius: 17px; background: rgba(18,18,16,.98); box-shadow: 0 22px 60px rgba(0,0,0,.58); -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px); opacity: 0; visibility: hidden; transform: translateY(-8px) scale(.98); transform-origin: top right; pointer-events: none; transition: opacity .2s ease, visibility .2s ease, transform .2s ease; }
+  html .shell > header[data-nav-open="true"] > .primary-navigation { opacity: 1; visibility: visible; transform: none; pointer-events: auto; }
+  html .shell > header .primary-navigation > a { width: 100%; min-height: 48px; justify-content: flex-start; padding: 0 12px; color: #aaa79f !important; font-size: 12px !important; letter-spacing: .07em; border-bottom: 1px solid #242420; }
+  html .shell > header .primary-navigation > a::after { display: none; }
+  html .shell > header .primary-navigation > a:is(:hover,:focus-visible,[aria-current="location"]) { color: #f2f0ed !important; background: #181815; border-radius: 10px; }
+  html .shell > header .primary-navigation > .conversation-return { display: none !important; }
+  .conversation-label-long { display: inline; }
+  .conversation-label-short { display: none; }
+  .mobile-nav-toggle { position: relative; display: inline-flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; width: 44px; height: 44px; padding: 0; border: 1px solid #34342f; border-radius: 999px; background: #121210; color: #f2f0ed; cursor: pointer; }
+  .mobile-nav-toggle span { display: block; width: 17px; height: 1.5px; border-radius: 999px; background: currentColor; transition: transform .22s ease, opacity .18s ease; }
+  header[data-nav-open="true"] .mobile-nav-toggle span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+  header[data-nav-open="true"] .mobile-nav-toggle span:nth-child(2) { opacity: 0; }
+  header[data-nav-open="true"] .mobile-nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
   html .shell #top h1 { font-size: clamp(23px, 5.9vw, 32px) !important; }
   html .shell #top h1 > span { min-width: 0; }
   .work-grid { grid-template-columns: minmax(0,1fr) !important; gap: 24px !important; }

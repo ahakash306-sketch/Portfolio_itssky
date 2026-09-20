@@ -64,8 +64,8 @@
   /* Every indexable page, shared by the site and the Studio panel. */
   var SITE_ORIGIN = "https://itssky.co.in";
   var PAGES = [
-    { id: "home",      name: "Home page",         file: "index.html",                 loc: "/" },
-    { id: "portfolio", name: "Full portfolio",    file: "explore.html",               loc: "/explore.html" },
+    { id: "home",      name: "Conversation", file: "conversation.html",   loc: "/conversation.html" },
+    { id: "portfolio", name: "Portfolio home",      file: "index.html",                 loc: "/" },
     { id: "kriyam",    name: "Kriyam.ai",         file: "works/kriyam/index.html",    loc: "/works/kriyam/" },
     { id: "proteger",  name: "Proteger Collect",  file: "works/proteger/index.html",  loc: "/works/proteger/" },
     { id: "goodbook",  name: "Goodbook",          file: "works/goodbook/index.html",  loc: "/works/goodbook/" },

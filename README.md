@@ -5,7 +5,8 @@ server-side code is required.
 
 ## Repository structure
 
-- `index.html` — portfolio homepage
+- `index.html` — full portfolio homepage
+- `conversation.html` — guided conversational portfolio
 - `works/*/index.html` — the five case-study renderers
 - `admin.html` — Studio content editor
 - `content.json` — published CMS content
@@ -60,6 +61,6 @@ The admin page is public on static hosting. It cannot change the repository by
 itself; publishing still requires committing the exported `content.json`.
 # Conversational portfolio
 
-The homepage is a static chat-style interface. Five recruiter-focused paths remain below the text field throughout the conversation and return short answers, named project evidence, contextual follow-ups, and links to the full case studies. Typed questions use local intent matching, including partial phrases and simple spelling mistakes. Unknown questions return three relevant suggested paths. The experience does not use a microphone, call an AI service, or invent answers outside `portfolio-knowledge.js`. The full original portfolio remains available at `explore.html`, including the journey panel.
+`conversation.html` is a static chat-style interface. Five recruiter-focused paths remain below the text field throughout the conversation and return short answers, named project evidence, contextual follow-ups, and links to the full case studies. Typed questions use local intent matching, including partial phrases and simple spelling mistakes. Unknown questions return three relevant suggested paths. The experience does not use a microphone, call an AI service, or invent answers outside `portfolio-knowledge.js`. The full portfolio is the root `index.html`, including the journey panel. The old `explore.html` route redirects to the root for backward compatibility.
 
 The existing admin export workflow is unchanged: edit in `admin.html`, export `content.json`, replace it in the repository, and commit. Open previews through an HTTP server rather than directly as local files. Draft preview links retain preview mode when opening a case study or the full portfolio.

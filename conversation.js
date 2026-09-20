@@ -273,7 +273,7 @@
       return anchor;
     } else {
       const anchor = make('a', null, 'evidence-item');
-      anchor.href = withPreview(link.href || 'explore.html#work');
+      anchor.href = withPreview(link.href || 'index.html#work');
       anchor.append(
         make('span', link.label || 'View evidence', 'evidence-name'),
         make('span', 'Open supporting portfolio content', 'evidence-claim'),

@@ -209,3 +209,153 @@ html[data-theme="light"] .contact-action{color:#30352f}
 @media(prefers-reduced-motion:reduce){
  .turn .answer>.contact-card,.turn .answer>.contact-actions{animation:none!important}
 }
+
+/* Readable conversation scale and clearer navigation actions. */
+header nav{font-size:14px;gap:10px}
+.full-portfolio-link{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:40px;padding:9px 15px;border:1px solid #aeca9f;border-radius:999px;background:#dce7d7;color:#172018;font-size:13px;font-weight:600;box-shadow:0 7px 20px #0003;transition:background .2s ease,border-color .2s ease,transform .2s ease,box-shadow .2s ease}
+.full-portfolio-link:hover{background:#b9d0ae;border-color:#cce0c3;transform:translateY(-1px);box-shadow:0 9px 24px #0005}
+#reset{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;padding:0;border-radius:50%;font-size:21px;line-height:1}
+#reset>span{display:block;transform:translateY(-1px)}
+.eyebrow{font-size:14px}
+#welcome h1{font-size:clamp(32px,3.6vw,46px);line-height:1.16;letter-spacing:-1.25px}
+input{font-size:16px}
+.entry>.suggestions button{font-size:14px;line-height:1.35}
+.question span{font-size:15px;line-height:1.5}
+.answer h2{font-size:26px;line-height:1.25}
+.answer p{font-size:16px;line-height:1.7}
+.project h3{font-size:18px}
+.project p{font-size:14px}
+.project .tag{font-size:11px}
+.project .open{font-size:13px}
+.links a{font-size:14px}
+.capability h3{font-size:17px}
+.response-label{font-size:11px!important}
+.evidence-name{font-size:14px}
+.evidence-claim{font-size:13px;line-height:1.55}
+.evidence-link{font-size:12px}
+.followups button,.full-case{font-size:13px;padding:10px 15px}
+.answer-details li{font-size:12px}
+.catalog-section>h3{font-size:11px}
+.catalog-group h4{font-size:15px}
+.catalog-group li{font-size:13px}
+.contact-card>h3{font-size:17px}
+.contact-row dt{font-size:10px}
+.contact-row dd{font-size:14px}
+.contact-action{font-size:13px}
+footer{font-size:12px}
+html[data-theme="light"] .full-portfolio-link{background:#304b35;border-color:#304b35;color:#fff}
+html[data-theme="light"] .full-portfolio-link:hover{background:#416147;border-color:#416147}
+
+@media(max-width:600px){
+ header nav{gap:8px}
+ .full-portfolio-link{min-height:38px;margin-right:auto;padding:8px 12px;font-size:13px}
+ #reset{width:38px;height:38px;padding:0;font-size:20px}
+ #welcome h1{font-size:clamp(30px,9vw,38px);line-height:1.18;letter-spacing:-1px}
+ .eyebrow{font-size:14px}
+ input{font-size:16px}
+ .entry>.suggestions::before{font-size:11px}
+ .entry>.suggestions button{min-height:50px;font-size:14px;line-height:1.4}
+ .entry>.suggestions button::before{font-size:11px}
+ .started .entry>.suggestions button{min-height:39px;font-size:12px}
+ .question span{font-size:15px}
+ .answer h2{font-size:23px}
+ .answer p{font-size:16px;line-height:1.65}
+ .project h3{font-size:18px}
+ .project p{font-size:14px}
+ .evidence-name{font-size:14px}
+ .evidence-claim{font-size:13px}
+ .followups button,.full-case{font-size:13px}
+ footer{font-size:11px}
+}
+
+/* Polished conversational interface. */
+:root{--surface:#111411;--surface-strong:#171b17;--line-soft:#222722;--glow:#8fad7e}
+body{background:radial-gradient(ellipse 58% 48% at 50% 43%,#172018 0,#0d100d 44%,#090a09 100%);background-attachment:fixed}
+header{padding:13px max(24px,calc((100vw - 1040px)/2));background:#090b09d9;border-color:#202420;box-shadow:0 8px 30px #0002}
+header nav{width:100%;justify-content:flex-end}
+main{width:min(840px,calc(100% - 48px));padding-top:48px}
+#welcome{max-width:720px;margin:0 auto}
+.portrait{width:70px;height:70px;margin-bottom:22px}
+.portrait img{border:1px solid #3c443a;box-shadow:0 0 0 6px #111511,0 18px 40px #0007}
+.portrait i{width:14px;height:14px;right:1px;bottom:2px;box-shadow:0 0 0 3px #0b0d0b}
+.eyebrow{margin-bottom:12px;color:#a5aba2}
+#welcome h1{margin-bottom:36px}
+form{min-height:70px;padding:10px 11px 10px 16px;border-color:#3b4339;border-radius:20px;background:linear-gradient(145deg,#151915,#101310);box-shadow:0 22px 55px #0008,0 0 0 1px #ffffff05 inset;transition:border-color .2s ease,box-shadow .2s ease,transform .2s ease}
+form:focus-within{border-color:#91ad83;box-shadow:0 24px 60px #0009,0 0 0 3px #91ad8317}
+.spark{margin-left:1px;color:#9dbb8d}
+.submit{min-height:46px;border-radius:14px;background:#e3ecdE;box-shadow:0 7px 20px #0003;transition:background .2s ease,transform .2s ease}
+.submit:hover{transform:translateY(-1px)}
+.entry>.suggestions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;max-width:700px;margin:16px auto 0}
+.entry>.suggestions::before{content:'Suggested questions';grid-column:1 / -1;padding:3px 3px 1px;color:#777f75;font-size:11px;font-weight:500;letter-spacing:.11em;text-align:left;text-transform:uppercase}
+.entry>.suggestions button{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:50px;padding:12px 15px;border-color:#272d27;border-radius:14px;background:#111411;color:#dce0da;text-align:left;box-shadow:0 8px 20px #0002;transform:none}
+.entry>.suggestions button::after{content:'↗';flex:none;color:var(--accent);font-size:13px;opacity:.8}
+.entry>.suggestions button:hover{border-color:#60705c;background:#171c17;transform:translateY(-1px)}
+.entry>.suggestions button:last-child{grid-column:1 / -1}
+.started main{padding-top:30px}
+.started #welcome{display:none}
+.started .entry{width:min(840px,calc(100% - 48px));padding-top:24px;background:linear-gradient(#090a0900,#090a09 23%)}
+.started .entry form{min-height:64px;background:#121612ed;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+.started .entry>.suggestions{display:flex;justify-content:center;max-width:none;margin-top:10px}
+.started .entry>.suggestions::before,.started .entry>.suggestions button::after{display:none}
+.started .entry>.suggestions button{min-height:38px;padding:8px 14px;border-radius:999px;box-shadow:none}
+#conversation{padding-top:0}
+.turn{margin-bottom:48px}
+.question{margin-bottom:28px}
+.question span{padding:11px 17px;border:1px solid #42503d;background:#263123;box-shadow:0 8px 24px #0002}
+.answer{padding-left:44px}
+.answer:before{display:grid;place-items:center;width:28px;height:28px;top:-2px;border:1px solid #44513f;border-radius:9px;background:#151b14;font-size:16px;box-shadow:0 8px 18px #0004}
+.answer h2{margin-bottom:13px}
+.short-answer{max-width:64ch;color:#abb1a8!important}
+.response-label{margin-top:26px!important;color:#7f897c!important}
+.cards{gap:18px}
+.project{padding:10px 10px 15px;border-color:#293029;border-radius:18px;background:linear-gradient(155deg,#171b17,#101310);box-shadow:0 16px 38px #0003;transition:border-color .2s ease,transform .25s ease,box-shadow .25s ease}
+.project img{border-radius:12px;background:#090a09}
+.project h3,.project p,.project .tag,.project .open{margin-left:4px;margin-right:4px}
+.project[href]:hover{border-color:#6f8268;transform:translateY(-3px);box-shadow:0 22px 48px #0005}
+.evidence-item{border-radius:15px;background:linear-gradient(145deg,#151915,#101310);box-shadow:0 10px 28px #0002}
+.followups{gap:9px}
+.followups button,.full-case{background:#141814}
+.followups button:hover,.full-case:hover{border-color:#7e9475}
+footer{background:#090b09e8;border-color:#202420;color:#777e76}
+html[data-theme="light"] body{background:radial-gradient(ellipse 58% 48% at 50% 43%,#e9eee4 0,#f5f4ef 48%,#f1f1eb 100%)}
+html[data-theme="light"] header{background:#f6f5f0df;box-shadow:0 8px 30px #36442e0b}
+html[data-theme="light"] form{background:linear-gradient(145deg,#fff,#f8f9f4)}
+html[data-theme="light"] .entry>.suggestions button{background:#fff;color:#30352f;box-shadow:0 8px 20px #3145260a}
+html[data-theme="light"] .started .entry{background:linear-gradient(#f6f5f000,#f6f5f0 23%)}
+html[data-theme="light"] .started .entry form{background:#fffefbed}
+html[data-theme="light"] .answer:before{background:#eef2e9;border-color:#cdd7c8}
+html[data-theme="light"] .short-answer{color:#5f695b!important}
+html[data-theme="light"] .project{background:linear-gradient(155deg,#fff,#f7f8f3);box-shadow:0 16px 38px #31452610}
+
+@media(max-width:600px){
+ body{background:radial-gradient(ellipse 95% 42% at 50% 36%,#172018 0,#0b0d0b 52%,#090a09 100%)}
+ header{padding:12px 14px}
+ main{width:calc(100% - 28px);padding-top:38px}
+ #welcome{padding-inline:6px}
+ .portrait{width:66px;height:66px;margin-bottom:20px}
+ #welcome h1{margin-bottom:30px}
+ form{min-height:62px;padding:8px 8px 8px 12px;border-radius:17px}
+ .spark{font-size:25px}
+ .submit{min-width:72px;min-height:44px;padding-inline:11px;border-radius:12px}
+ .entry>.suggestions{display:flex;max-width:none;margin-top:13px;padding:7px;border-radius:18px;background:#101310;box-shadow:0 18px 40px #0004}
+ .entry>.suggestions::before{padding:8px 9px 7px}
+ .entry>.suggestions button{min-height:52px;padding:10px;border-radius:11px;background:transparent;box-shadow:none}
+ .entry>.suggestions button+button{border-top-color:#282e28}
+ .entry>.suggestions button:last-child{min-height:52px}
+ .started main{width:calc(100% - 24px);padding-top:18px}
+ .started .entry{width:calc(100% - 20px);padding-top:18px}
+ .started .entry>.suggestions{display:grid;padding:0;background:transparent;box-shadow:none}
+ .started .entry>.suggestions button{min-height:38px;padding:7px 6px;background:#111411}
+ .turn{margin-bottom:40px}
+ .answer{padding-left:36px}
+ .answer:before{width:24px;height:24px;font-size:14px;border-radius:8px}
+ .cards{gap:14px}
+ .project{border-radius:16px}
+ footer{padding-inline:14px}
+ html[data-theme="light"] .entry>.suggestions{background:#fff}
+ html[data-theme="light"] .started .entry>.suggestions{background:transparent}
+}
+
+/* Star-free composer and responses. */
+.answer{padding-left:0}
+.answer::before{content:none!important;display:none!important}
