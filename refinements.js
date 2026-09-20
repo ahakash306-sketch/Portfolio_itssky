@@ -1,5 +1,22 @@
 (() => {
   'use strict';
+  const warmed = new Set();
+  const warm = event => {
+    const anchor = event.target.closest && event.target.closest('a[href]');
+    if (!anchor) return;
+    const url = new URL(anchor.href, document.baseURI);
+    if (url.origin !== location.origin || url.href === location.href || warmed.has(url.href)) return;
+    warmed.add(url.href);
+    const link = document.createElement('link');
+    link.rel = 'prefetch';
+    link.as = 'document';
+    link.href = url.href;
+    document.head.append(link);
+  };
+  document.addEventListener('pointerover', warm, { passive: true });
+  document.addEventListener('focusin', warm);
+  document.addEventListener('touchstart', warm, { passive: true });
+
   let pending = false;
   const update = () => {
     pending = false;

@@ -1,4 +1,27 @@
 (() => {
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  if (!location.hash) {
+    scrollTo(0, 0);
+    addEventListener('load', () => scrollTo(0, 0), { once: true });
+  }
+
+  const warmed = new Set();
+  const warm = event => {
+    const anchor = event.target.closest && event.target.closest('a[href]');
+    if (!anchor) return;
+    const url = new URL(anchor.href, document.baseURI);
+    if (url.origin !== location.origin || url.href === location.href || warmed.has(url.href)) return;
+    warmed.add(url.href);
+    const link = document.createElement('link');
+    link.rel = 'prefetch';
+    link.as = 'document';
+    link.href = url.href;
+    document.head.append(link);
+  };
+  document.addEventListener('pointerover', warm, { passive: true });
+  document.addEventListener('focusin', warm);
+  document.addEventListener('touchstart', warm, { passive: true });
+
   let queued = false;
   function update() {
     queued = false;

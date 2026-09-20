@@ -47,7 +47,7 @@
     outcome: "",
     clientsLabel: "we worked for",
     clients: ["PNB MetLife", "Kotak Life", "Toyota Financial Services", "Edelweiss Life Insurance"],
-    ctaLinks: [{ label: "Connect", href: "mailto:ahakash306@gmail.com" }, { label: "Visit Application ↗", href: "https://tfsin.trykriyam.in/users/sign_in" }]
+    ctaLinks: [{ label: "Connect", href: "mailto:akashh306@outlook.com" }, { label: "Visit Application ↗", href: "https://tfsin.trykriyam.in/users/sign_in" }]
   },
   proteger: {
     name: "Proteger Collect",
@@ -93,7 +93,7 @@
     outcome: "",
     clientsLabel: "We worked for",
     clients: ["TATA", "Maruti Suzuki"],
-    ctaLinks: [{ label: "Connect", href: "mailto:ahakash306@gmail.com" }]
+    ctaLinks: [{ label: "Connect", href: "mailto:akashh306@outlook.com" }]
   },
   goodbook: {
     name: "Goodbook",
@@ -138,7 +138,7 @@
     outcome: "",
     clientsLabel: "",
     clients: [],
-    ctaLinks: [{ label: "Connect", href: "mailto:ahakash306@gmail.com" }, { label: "Visit Application ↗", href: "https://goodbook.co.in/auth/signin" }]
+    ctaLinks: [{ label: "Connect", href: "mailto:akashh306@outlook.com" }, { label: "Visit Application ↗", href: "https://goodbook.co.in/auth/signin" }]
   }
 };
 

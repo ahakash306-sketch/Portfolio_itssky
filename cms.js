@@ -528,7 +528,7 @@
     var native = PAGES.filter(function(p){return p.id===id;})[0];
     if(native) {
       var nativeUrl = new URL(native.file, SCRIPT_BASE);
-      if (id !== "home" && id !== "portfolio") nativeUrl.searchParams.set("v", "2");
+      if (id !== "home" && id !== "portfolio") nativeUrl.searchParams.set("v", "4");
       return nativeUrl.href;
     }
     var entry = projects().filter(function(p){return p.id===id;})[0];
@@ -695,7 +695,7 @@
 
   /* Load the committed file. A dirty local draft is kept separate and untouched. */
   function loadRemote() {
-    return fetch(new URL("content.json", SCRIPT_BASE), { cache: "no-store" })
+    return fetch(new URL("content.json", SCRIPT_BASE), { cache: "no-cache" })
       .then(function (r) { return r.ok ? r.json() : null; })
       .then(function (c) {
         remote.staticFile = !!c;

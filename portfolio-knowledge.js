@@ -6,6 +6,17 @@
 (function () {
   'use strict';
 
+  /* One source of truth for every conversational contact response and link. */
+  var profile = {
+    name: 'Akash H',
+    role: 'Senior UX & Product Designer',
+    email: 'akashh306@outlook.com',
+    location: 'Kolkata, India',
+    website: 'https://itssky.co.in/',
+    linkedin: 'https://www.linkedin.com/in/akash-h-11946b16b/',
+    behance: 'https://www.behance.net/akashhossain'
+  };
+
   var projects = {
     kriyam: {
       id: 'kriyam',
@@ -115,6 +126,72 @@
       question: 'Here’s what you can explore',
       answer: 'You can ask about my work, products I’ve designed, impact, design process, skills, tools, clients, experience, or individual projects.',
       followUps: ['best_work', 'products', 'impact', 'process', 'skills']
+    }
+  ];
+
+  var contactIntents = [
+    {
+      id: 'contact_email',
+      phrases: ['email', 'email address', 'your email', 'whats your email', 'what is your email', 'give me your email', 'mail address', 'email id', 'your mail'],
+      question: 'Email',
+      answer: 'You can reach me at {email}.',
+      actions: [{ type: 'email', label: 'Email me' }],
+      followUps: ['projects', 'products', 'experience']
+    },
+    {
+      id: 'contact_linkedin',
+      phrases: ['linkedin', 'linked in', 'linkdin', 'linkedin profile', 'whats your linkedin', 'what is your linkedin'],
+      question: 'LinkedIn',
+      answer: 'You can find me on LinkedIn at {linkedinDisplay}.',
+      actions: [{ type: 'linkedin', label: 'View LinkedIn' }],
+      followUps: ['projects', 'experience']
+    },
+    {
+      id: 'contact_behance',
+      phrases: ['behance', 'behance profile', 'whats your behance', 'what is your behance'],
+      question: 'Behance',
+      answer: 'You can find my design work on Behance.',
+      actions: [{ type: 'behance', label: 'View Behance' }],
+      followUps: ['projects', 'best_work']
+    },
+    {
+      id: 'contact_location',
+      phrases: ['where are you based', 'where are u based', 'where r u based', 'where do you live', 'your location', 'location', 'based in', 'which city'],
+      question: 'Location',
+      answer: 'I’m based in {location}.',
+      actions: [],
+      followUps: ['experience', 'projects', 'products']
+    },
+    {
+      id: 'contact_socials',
+      phrases: ['socials', 'social links', 'social media', 'show me your socials', 'where can i follow you', 'follow you', 'your profiles'],
+      question: 'Social profiles',
+      answer: 'You can find me on LinkedIn and Behance.',
+      cardTitle: 'Find me online',
+      cardFields: ['linkedin', 'behance'],
+      actions: [],
+      followUps: ['projects', 'best_work', 'experience']
+    },
+    {
+      id: 'contact_general',
+      phrases: ['contact', 'contac', 'contcat', 'conatct', 'contact details', 'contact info', 'get in touch', 'get in tuch', 'reach you', 'reach u', 'how do i reach', 'how can i reach', 'lets connect', 'can we connect', 'can we talk', 'where can i find you', 'connect with you'],
+      question: 'Let’s get in touch',
+      answer: 'Absolutely. The easiest way is to drop me an email, or you can find me on LinkedIn and Behance.',
+      cardTitle: 'Let’s talk',
+      cardFields: ['email', 'linkedin', 'behance', 'website', 'location'],
+      actions: [],
+      followUps: ['projects', 'products', 'experience']
+    }
+  ];
+
+  var hiringIntents = [
+    {
+      id: 'contact_hiring',
+      phrases: ['hire you', 'hiring you', 'how can i hire', 'work with you', 'work together', 'can we work', 'opportunity', 'opportunities', 'role you might', 'available for work', 'are you available', 'looking for opportunities', 'need a product designer', 'need product designer', 'discuss a project', 'project for you', 'speak with you', 'talk about a role', 'freelance project'],
+      question: 'Working together',
+      answer: 'Sounds interesting. Drop me a quick email with some context and we can take it from there.',
+      actions: [{ type: 'email', label: 'Email me' }, { type: 'linkedin', label: 'Connect on LinkedIn' }],
+      followUps: ['projects', 'products', 'experience']
     }
   ];
 
@@ -391,6 +468,9 @@
     projects: projects,
     topics: topics,
     basicIntents: basicIntents,
+    contactIntents: contactIntents,
+    hiringIntents: hiringIntents,
+    profile: profile,
     tools: tools
   };
 })();

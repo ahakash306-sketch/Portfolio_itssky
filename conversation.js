@@ -95,6 +95,46 @@
     };
   }
 
+  function displayUrl(value) {
+    return String(value || '').replace(/^https?:\/\/(?:www\.)?/, '').replace(/\/$/, '');
+  }
+
+  function profileTemplate(text) {
+    const profile = KB.profile || {};
+    const values = Object.assign({}, profile, {
+      websiteDisplay: displayUrl(profile.website),
+      linkedinDisplay: displayUrl(profile.linkedin),
+      behanceDisplay: displayUrl(profile.behance)
+    });
+    return String(text || '').replace(/\{([a-zA-Z]+)\}/g, (_, key) => values[key] || '');
+  }
+
+  function configuredIntentTopic(intent) {
+    return {
+      id: intent.id,
+      question: intent.question,
+      answer: profileTemplate(intent.answer),
+      contactCard: intent.cardFields ? { title: intent.cardTitle, fields: intent.cardFields } : null,
+      contactActions: intent.actions || [],
+      links: [],
+      followUps: intent.followUps || []
+    };
+  }
+
+  function matchesIntentPhrase(query, phrase) {
+    const clean = normalize(query);
+    const target = normalize(phrase);
+    if (!target) return false;
+    if (clean === target) return true;
+    if (target.split(' ').length === 1) return (` ${clean} `).includes(` ${target} `);
+    return clean.includes(target);
+  }
+
+  function configuredIntent(query, intents) {
+    const match = (intents || []).find(intent => (intent.phrases || []).some(phrase => matchesIntentPhrase(query, phrase)));
+    return match ? configuredIntentTopic(match) : null;
+  }
+
   function aliasInQuery(query, alias) {
     const clean = ` ${normalize(query)} `;
     return clean.includes(` ${normalize(alias)} `);
@@ -161,6 +201,10 @@
   function detectTopic(query) {
     const basic = basicIntentTopic(query);
     if (basic) return basic;
+    const contact = configuredIntent(query, KB.contactIntents);
+    if (contact) return contact;
+    const hiring = configuredIntent(query, KB.hiringIntents);
+    if (hiring) return hiring;
     const tool = knownToolTopic(query);
     if (tool) return tool;
     const unknownTool = unknownToolTopic(query);
@@ -172,6 +216,24 @@
   function withPreview(href) {
     if (!new URLSearchParams(location.search).has('preview') || /^(mailto:|https?:)/.test(href)) return href;
     return `${href}${href.includes('?') ? '&' : '?'}preview=1`;
+  }
+
+  const warmedHrefs = new Set();
+  function warmHref(href) {
+    if (!href) return;
+    const url = new URL(href, document.baseURI);
+    if (url.origin !== location.origin || url.href === location.href || warmedHrefs.has(url.href)) return;
+    warmedHrefs.add(url.href);
+    const link = document.createElement('link');
+    link.rel = 'prefetch';
+    link.as = 'document';
+    link.href = url.href;
+    document.head.append(link);
+  }
+
+  function warmLinkedPage(event) {
+    const anchor = event.target.closest && event.target.closest('a[href]');
+    if (anchor) warmHref(anchor.href);
   }
 
   function projectHref(id) {
@@ -253,6 +315,59 @@
     return catalogNode;
   }
 
+  function contactDetails(type) {
+    const profile = KB.profile || {};
+    const details = {
+      email: { label: 'Email', value: profile.email, href: `mailto:${profile.email}`, aria: `Email ${profile.name} at ${profile.email}` },
+      linkedin: { label: 'LinkedIn', value: displayUrl(profile.linkedin), href: profile.linkedin, aria: `Open ${profile.name}’s LinkedIn profile`, external: true },
+      behance: { label: 'Behance', value: displayUrl(profile.behance), href: profile.behance, aria: `Open ${profile.name}’s Behance profile`, external: true },
+      website: { label: 'Website', value: displayUrl(profile.website), href: profile.website, aria: `Open ${profile.name}’s portfolio` },
+      location: { label: 'Location', value: profile.location }
+    };
+    return details[type] || null;
+  }
+
+  function contactLink(detail, label, className) {
+    const anchor = make('a', null, className);
+    anchor.href = detail.href;
+    anchor.setAttribute('aria-label', detail.aria);
+    if (detail.external) {
+      anchor.target = '_blank';
+      anchor.rel = 'noopener noreferrer';
+    }
+    anchor.append(make('span', label || detail.value), make('span', detail.external ? '↗' : '→', 'contact-arrow'));
+    return anchor;
+  }
+
+  function contactCardComponent(config) {
+    const card = make('section', null, 'contact-card');
+    card.setAttribute('aria-label', config.title || 'Contact details');
+    card.append(make('h3', config.title || 'Let’s talk'));
+    const list = make('dl', null, 'contact-list');
+    (config.fields || []).forEach(type => {
+      const detail = contactDetails(type);
+      if (!detail || !detail.value) return;
+      const row = make('div', null, 'contact-row');
+      row.append(make('dt', detail.label));
+      const value = make('dd');
+      if (detail.href) value.append(contactLink(detail, detail.value, 'contact-value'));
+      else value.textContent = detail.value;
+      row.append(value);
+      list.append(row);
+    });
+    card.append(list);
+    return card;
+  }
+
+  function contactActionsComponent(actions) {
+    const list = make('div', null, 'contact-actions');
+    actions.forEach(action => {
+      const detail = contactDetails(action.type);
+      if (detail && detail.href) list.append(contactLink(detail, action.label, 'contact-action'));
+    });
+    return list;
+  }
+
   function shouldShowEvidence(topic) {
     if (evidenceTopics.has(topic.id)) return true;
     return Object.keys(KB.projects).some(id => topic.id === id || topic.id.startsWith(`${id}_`));
@@ -270,6 +385,9 @@
     const answer = make('div', null, 'answer');
     answer.tabIndex = -1;
     answer.append(make('h2', topic.question), make('p', topic.answer, 'short-answer'));
+
+    if (topic.contactCard) answer.append(contactCardComponent(topic.contactCard));
+    if (topic.contactActions && topic.contactActions.length) answer.append(contactActionsComponent(topic.contactActions));
 
     if (topic.catalog && topic.catalog.length) answer.append(catalogComponent(topic.catalog));
 
@@ -289,6 +407,11 @@
       evidenceLinks.forEach(link => list.append(projectLinkComponent(link)));
       evidence.append(list);
       answer.append(evidence);
+      const firstProject = evidenceLinks.find(link => link.project);
+      if (firstProject) {
+        const schedule = window.requestIdleCallback || (callback => setTimeout(callback, 250));
+        schedule(() => warmHref(projectHref(firstProject.project)));
+      }
     }
 
     const followUpIds = suggestedTopics || topic.followUps || [];
@@ -391,6 +514,10 @@
     input.value = '';
     input.focus();
   });
+
+  document.addEventListener('pointerover', warmLinkedPage, { passive: true });
+  document.addEventListener('focusin', warmLinkedPage);
+  document.addEventListener('touchstart', warmLinkedPage, { passive: true });
 
   reset.addEventListener('click', () => {
     conversation.replaceChildren();
