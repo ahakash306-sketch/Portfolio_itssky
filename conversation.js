@@ -258,6 +258,14 @@
     return Object.keys(KB.projects).some(id => topic.id === id || topic.id.startsWith(`${id}_`));
   }
 
+  function orderedEvidenceLinks(links) {
+    return [...(links || [])].sort((a, b) => {
+      if (a.project === 'workspace' && b.project !== 'workspace') return -1;
+      if (b.project === 'workspace' && a.project !== 'workspace') return 1;
+      return 0;
+    });
+  }
+
   function answerComponent(topic, suggestedTopics) {
     const answer = make('div', null, 'answer');
     answer.tabIndex = -1;
@@ -273,11 +281,12 @@
 
     const showEvidence = shouldShowEvidence(topic);
     if (showEvidence && topic.links && topic.links.length) {
+      const evidenceLinks = orderedEvidenceLinks(topic.links);
       const evidence = make('div', null, 'evidence');
       evidence.append(make('p', 'Evidence', 'response-label'));
       const list = make('div', null, 'evidence-list');
-      if (topic.links.some(link => link.project)) list.classList.add('cards');
-      topic.links.forEach(link => list.append(projectLinkComponent(link)));
+      if (evidenceLinks.some(link => link.project)) list.classList.add('cards');
+      evidenceLinks.forEach(link => list.append(projectLinkComponent(link)));
       evidence.append(list);
       answer.append(evidence);
     }
@@ -289,7 +298,7 @@
       section.append(make('p', 'Go deeper', 'response-label'));
       const list = make('div', null, 'followups');
       validFollowUps.forEach(item => list.append(chipComponent(item)));
-      const linkedProject = showEvidence && (topic.links || []).find(link => link.project);
+      const linkedProject = showEvidence && orderedEvidenceLinks(topic.links).find(link => link.project);
       if (linkedProject) {
         const full = make('a', 'View the whole case study ↗', 'full-case');
         full.href = projectHref(linkedProject.project);
