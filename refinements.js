@@ -43,6 +43,21 @@
   });
   mobileMenu.addEventListener('change', () => setMenu(false));
 
+  const siteHeader = document.querySelector('.shell > header');
+  let previousScrollY = window.scrollY;
+  const syncHeaderScrollState = () => {
+    if (!siteHeader) return;
+    const currentY = window.scrollY;
+    siteHeader.dataset.scrolled = currentY > Math.max(80, window.innerHeight * .42) ? 'true' : 'false';
+    const goingDown = currentY > previousScrollY + 3;
+    const goingUp = currentY < previousScrollY - 3;
+    siteHeader.dataset.hidden = goingDown ? 'true' : (goingUp ? 'false' : siteHeader.dataset.hidden || 'false');
+    siteHeader.dataset.floating = goingUp && currentY > 20 ? 'true' : 'false';
+    previousScrollY = currentY;
+  };
+  syncHeaderScrollState();
+  window.addEventListener('scroll', syncHeaderScrollState, { passive: true });
+
   const chatLayer = document.getElementById('portfolio-chat-layer');
   const chatBackground = [...document.body.children].filter(el => el !== chatLayer && !['SCRIPT','STYLE'].includes(el.tagName));
   const chatFrame = chatLayer && chatLayer.querySelector('.portfolio-chat-frame');
@@ -55,9 +70,9 @@
   const closeChat = () => {
     if (!chatLayer || chatLayer.hidden) return;
     chatLayer.dataset.open = 'false';
-    document.body.classList.remove('portfolio-chat-open');
-    document.documentElement.classList.remove('portfolio-chat-open');
-    chatBackground.forEach(el => { el.inert = false; });
+  document.body.classList.remove('portfolio-chat-open');
+  document.documentElement.classList.remove('portfolio-chat-open');
+  chatBackground.forEach(el => { el.inert = false; });
     clearTimeout(chatHideTimer);
     chatHideTimer = window.setTimeout(() => {
       chatLayer.hidden = true;
@@ -73,18 +88,19 @@
     chatScrollY = window.scrollY;
     if (!chatFrame.src) chatFrame.src = chatFrame.dataset.src;
     chatLayer.hidden = false;
-    document.body.classList.add('portfolio-chat-open');
-    document.documentElement.classList.add('portfolio-chat-open');
-    chatBackground.forEach(el => { el.inert = true; });
+  document.body.classList.remove('portfolio-chat-open');
+  document.documentElement.classList.remove('portfolio-chat-open');
+  chatBackground.forEach(el => { el.inert = false; });
     requestAnimationFrame(() => {
       chatLayer.dataset.open = 'true';
-      chatClose.focus({ preventScroll: true });
+      if (chatClose) chatClose.focus({ preventScroll: true });
       window.scrollTo(0, chatScrollY);
     });
     requestAnimationFrame(() => window.scrollTo(0, chatScrollY));
     window.setTimeout(() => window.scrollTo(0, chatScrollY), 80);
     setMenu(false);
   };
+  window.openPortfolioChat = trigger => openChat(trigger);
 
   chatTriggers.forEach(trigger => { trigger.setAttribute('aria-haspopup', 'dialog'); });
   document.addEventListener('click', event => {
@@ -97,7 +113,6 @@
     const trigger = event.target.closest && event.target.closest('.conversation-return, .mobile-conversation-return');
     if (!trigger) return;
     chatScrollY = window.scrollY;
-    event.preventDefault();
   }, true);
   if (chatFrame) chatFrame.addEventListener('load', () => window.scrollTo(0, chatScrollY));
   if (chatLayer) chatLayer.addEventListener('click', event => {
