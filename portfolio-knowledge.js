@@ -96,14 +96,14 @@
       id: 'greeting',
       phrases: ['hi', 'hello', 'hey', 'hey there', 'hi akash', 'hello akash', 'good morning', 'good afternoon', 'good evening'],
       question: 'Hey there',
-      answer: 'Hey! 👋 What would you like to know about my work?',
+      answer: 'Hey! 👋 What are you curious about?',
       followUps: ['best_work', 'products', 'impact', 'process', 'skills']
     },
     {
       id: 'thanks',
       phrases: ['thanks', 'thank you', 'cool thanks', 'got it', 'helpful'],
       question: 'You’re welcome',
-      answer: 'Glad that helped. What else would you like to explore?',
+      answer: 'Glad that helped. Want to explore anything else?',
       followUps: ['best_work', 'products', 'impact', 'process']
     },
     {

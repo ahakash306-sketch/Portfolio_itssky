@@ -70,3 +70,31 @@ html .shell #top h1 { font-size: clamp(26px, 2.9vw, 42px) !important; }
   html .shell *, html .shell *::before, html .shell *::after { animation-duration: .01ms !important; animation-delay: 0ms !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
   html .shell section[data-screen-label] > div { transform: none !important; }
 }
+
+/* Conversational portfolio drawer */
+html.portfolio-chat-open,body.portfolio-chat-open{overflow:hidden!important;height:100%;overscroll-behavior:none}
+.portfolio-chat-layer[hidden]{display:none!important}
+.portfolio-chat-layer{position:fixed;inset:0;z-index:200;display:grid;grid-template-columns:minmax(0,1fr);isolation:isolate}
+.portfolio-chat-backdrop{position:absolute;inset:0;width:100%;height:100%;border:0;background:rgba(0,0,0,.28);cursor:pointer;opacity:0;transition:opacity .28s ease;backdrop-filter:none;-webkit-backdrop-filter:none;touch-action:none}
+.portfolio-chat-panel{position:relative;z-index:1;justify-self:end;width:35vw;height:100%;display:grid;grid-template-rows:auto minmax(0,1fr);border:0;border-left:1px solid rgba(255,255,255,.18);background:linear-gradient(145deg,rgba(43,51,56,.7),rgba(12,17,20,.8));backdrop-filter:blur(28px) saturate(140%);-webkit-backdrop-filter:blur(28px) saturate(140%);box-shadow:-24px 0 80px rgba(0,0,0,.4),inset 1px 0 0 rgba(255,255,255,.06);transform:translateX(102%);transition:transform .36s cubic-bezier(.22,.75,.22,1)}
+.portfolio-chat-layer[data-open="true"] .portfolio-chat-backdrop{opacity:1}
+.portfolio-chat-layer[data-open="true"] .portfolio-chat-panel{transform:none}
+.portfolio-chat-header{display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:70px;padding:12px 18px 12px 22px;border-bottom:1px solid #24282a;background:rgba(20,25,28,.25)}
+.portfolio-chat-header>div{display:grid;gap:3px}
+.portfolio-chat-header span{color:#737a7d;font-size:9px;letter-spacing:.12em;text-transform:uppercase}
+.portfolio-chat-header strong{color:#f0f2f2;font-size:14px;font-weight:500;letter-spacing:-.1px}
+.portfolio-chat-close{display:grid!important;place-items:center;width:42px!important;height:42px!important;min-width:42px;border:1px solid #303639;border-radius:12px;background:#171b1d;color:#d9dddd;font:inherit;font-size:24px;line-height:1;cursor:pointer;transition:border-color .2s ease,background .2s ease,color .2s ease}
+.portfolio-chat-close:hover{border-color:#596267;background:#202628;color:#fff}
+.portfolio-chat-close:focus-visible{outline:2px solid #f2f0ed;outline-offset:3px}
+.portfolio-chat-close span{font-size:24px;line-height:1;transform:translateY(-1px)}
+.portfolio-chat-frame{display:block;width:100%;height:100%;border:0;background:transparent;overscroll-behavior:contain}
+
+@media(max-width:900px){
+ .portfolio-chat-panel{width:100vw}
+ .portfolio-chat-header{min-height:64px;padding:10px 12px 10px 16px}
+ .portfolio-chat-close{width:40px!important;height:40px!important;min-width:40px}
+}
+
+@media(prefers-reduced-motion:reduce){
+ .portfolio-chat-backdrop,.portfolio-chat-panel{transition:none}
+}

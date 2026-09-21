@@ -39,9 +39,91 @@
     if (menuLink || (mobileMenu.matches && !event.target.closest('.shell > header'))) setMenu(false);
   });
   document.addEventListener('keydown', event => {
-    if (event.key === 'Escape') setMenu(false, true);
+    if (event.key === 'Escape' && !document.body.classList.contains('portfolio-chat-open')) setMenu(false, true);
   });
   mobileMenu.addEventListener('change', () => setMenu(false));
+
+  const chatLayer = document.getElementById('portfolio-chat-layer');
+  const chatBackground = [...document.body.children].filter(el => el !== chatLayer && !['SCRIPT','STYLE'].includes(el.tagName));
+  const chatFrame = chatLayer && chatLayer.querySelector('.portfolio-chat-frame');
+  const chatClose = chatLayer && chatLayer.querySelector('.portfolio-chat-close');
+  const chatTriggers = [...document.querySelectorAll('.conversation-return, .mobile-conversation-return')];
+  let chatReturnFocus = null;
+  let chatHideTimer = 0;
+  let chatScrollY = 0;
+
+  const closeChat = () => {
+    if (!chatLayer || chatLayer.hidden) return;
+    chatLayer.dataset.open = 'false';
+    document.body.classList.remove('portfolio-chat-open');
+    document.documentElement.classList.remove('portfolio-chat-open');
+    chatBackground.forEach(el => { el.inert = false; });
+    clearTimeout(chatHideTimer);
+    chatHideTimer = window.setTimeout(() => {
+      chatLayer.hidden = true;
+      window.scrollTo(0, chatScrollY);
+      if (chatReturnFocus && document.contains(chatReturnFocus)) chatReturnFocus.focus({ preventScroll: true });
+    }, matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 360);
+  };
+
+  const openChat = trigger => {
+    if (!chatLayer || !chatFrame) return;
+    clearTimeout(chatHideTimer);
+    chatReturnFocus = trigger || document.activeElement;
+    chatScrollY = window.scrollY;
+    if (!chatFrame.src) chatFrame.src = chatFrame.dataset.src;
+    chatLayer.hidden = false;
+    document.body.classList.add('portfolio-chat-open');
+    document.documentElement.classList.add('portfolio-chat-open');
+    chatBackground.forEach(el => { el.inert = true; });
+    requestAnimationFrame(() => {
+      chatLayer.dataset.open = 'true';
+      chatClose.focus({ preventScroll: true });
+      window.scrollTo(0, chatScrollY);
+    });
+    requestAnimationFrame(() => window.scrollTo(0, chatScrollY));
+    window.setTimeout(() => window.scrollTo(0, chatScrollY), 80);
+    setMenu(false);
+  };
+
+  chatTriggers.forEach(trigger => { trigger.setAttribute('aria-haspopup', 'dialog'); });
+  document.addEventListener('click', event => {
+    const trigger = event.target.closest && event.target.closest('.conversation-return, .mobile-conversation-return');
+    if (!trigger) return;
+    event.preventDefault();
+    openChat(trigger);
+  }, true);
+  document.addEventListener('pointerdown', event => {
+    const trigger = event.target.closest && event.target.closest('.conversation-return, .mobile-conversation-return');
+    if (!trigger) return;
+    chatScrollY = window.scrollY;
+    event.preventDefault();
+  }, true);
+  if (chatFrame) chatFrame.addEventListener('load', () => window.scrollTo(0, chatScrollY));
+  if (chatLayer) chatLayer.addEventListener('click', event => {
+    if (event.target.closest('.portfolio-chat-close, .portfolio-chat-backdrop')) closeChat();
+  });
+  document.addEventListener('keydown', event => {
+    if (!chatLayer || chatLayer.hidden) return;
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      closeChat();
+      return;
+    }
+    if (event.key !== 'Tab') return;
+    const focusable = [chatClose, chatFrame].filter(Boolean);
+    const current = focusable.indexOf(document.activeElement);
+    if (event.shiftKey && current <= 0) {
+      event.preventDefault();
+      focusable.at(-1).focus();
+    } else if (!event.shiftKey && current === focusable.length - 1) {
+      event.preventDefault();
+      focusable[0].focus();
+    }
+  });
+  window.addEventListener('message', event => {
+    if (event.source === chatFrame?.contentWindow && event.data?.type === 'portfolio-chat-close') closeChat();
+  });
 
   let pending = false;
   const update = () => {

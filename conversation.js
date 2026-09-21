@@ -241,12 +241,6 @@
     return withPreview(href);
   }
 
-  function messageComponent(text) {
-    const asked = make('div', null, 'question');
-    asked.append(make('span', text));
-    return asked;
-  }
-
   function chipComponent(topic, label) {
     const button = make('button', `${label || topic.shortLabel || topic.question} →`);
     button.type = 'button';
@@ -384,7 +378,8 @@
   function answerComponent(topic, suggestedTopics) {
     const answer = make('div', null, 'answer');
     answer.tabIndex = -1;
-    answer.append(make('h2', topic.question), make('p', topic.answer, 'short-answer'));
+    answer.setAttribute('aria-label', topic.question);
+    answer.append(make('p', topic.answer, 'short-answer'));
 
     if (topic.contactCard) answer.append(contactCardComponent(topic.contactCard));
     if (topic.contactActions && topic.contactActions.length) answer.append(contactActionsComponent(topic.contactActions));
@@ -418,7 +413,7 @@
     const validFollowUps = followUpIds.map(id => typeof id === 'string' ? topicMap.get(id) : id).filter(Boolean).slice(0, topic.followUpLimit || 4);
     if (validFollowUps.length) {
       const section = make('div', null, 'followup-section');
-      section.append(make('p', 'Go deeper', 'response-label'));
+      section.append(make('p', 'Want to dig deeper?', 'response-label'));
       const list = make('div', null, 'followups');
       validFollowUps.forEach(item => list.append(chipComponent(item)));
       const linkedProject = showEvidence && orderedEvidenceLinks(topic.links).find(link => link.project);
@@ -456,8 +451,8 @@
   function addTurn(question, topic, suggestedTopics) {
     startConversation();
     const turn = make('section', null, 'turn');
-    turn.append(messageComponent(question), answerComponent(topic, suggestedTopics));
-    conversation.append(turn);
+    turn.append(answerComponent(topic, suggestedTopics));
+    conversation.replaceChildren(turn);
     announcement.textContent = `Answered: ${question}`;
     requestAnimationFrame(() => {
       const answer = turn.querySelector('.answer');
@@ -468,10 +463,13 @@
     });
   }
 
-  function askTopic(id, displayedQuestion) {
+  function askTopic(id, options = {}) {
     const topic = topicMap.get(id);
     if (!topic) return;
-    addTurn(displayedQuestion || topic.question, topic);
+    const responseTopic = options.followUp
+      ? Object.assign({}, topic, { links: [], followUpLimit: Math.min(topic.followUpLimit || 4, 4) })
+      : topic;
+    addTurn(topic.question, responseTopic);
     input.value = '';
   }
 
@@ -502,8 +500,7 @@
     if (!button) return;
     const topic = topicMap.get(button.dataset.topic);
     if (!topic) return;
-    const displayedQuestion = button.closest('.suggestions') ? topic.question : button.textContent.replace(/\s*→\s*$/, '');
-    askTopic(topic.id, displayedQuestion);
+    askTopic(topic.id, { followUp: Boolean(button.closest('.followups')) });
   });
 
   form.addEventListener('submit', event => {
@@ -515,9 +512,27 @@
     input.focus();
   });
 
+  input.addEventListener('keydown', event => {
+    if (event.key !== 'Enter' || event.shiftKey || event.isComposing) return;
+    event.preventDefault();
+    form.requestSubmit();
+  });
+
   document.addEventListener('pointerover', warmLinkedPage, { passive: true });
   document.addEventListener('focusin', warmLinkedPage);
   document.addEventListener('touchstart', warmLinkedPage, { passive: true });
+
+  if (document.documentElement.classList.contains('embedded')) {
+    const embeddedHeading = document.querySelector('#welcome h1');
+    if (embeddedHeading) embeddedHeading.firstChild.nodeValue = 'What would you like to explore';
+    document.addEventListener('click', event => {
+      const link = event.target.closest('a[href]');
+      if (link) link.target = '_top';
+    }, true);
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape') window.parent.postMessage({ type: 'portfolio-chat-close' }, location.origin);
+    });
+  }
 
   reset.addEventListener('click', () => {
     conversation.replaceChildren();
