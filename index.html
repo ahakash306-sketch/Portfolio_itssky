@@ -34,8 +34,8 @@
         y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
     })(window, document, "clarity", "script", "yl3nb3dshy");
 </script>
-<link rel="stylesheet" href="./refinements.css?v=8">
-<script src="./refinements.js?v=10" defer></script>
+<link rel="stylesheet" href="./refinements.css?v=15">
+<script src="./refinements.js?v=15" defer></script>
 </head>
 <body>
 <x-dc>
@@ -1236,6 +1236,23 @@ scanVideos() {
 }
 
 </script>
+<div class="portfolio-ask-dock" id="portfolio-ask-dock" tabindex="-1">
+  <form class="portfolio-ask-form" id="portfolio-ask-form" role="search">
+    <span class="portfolio-ask-mark" aria-hidden="true">✦</span>
+    <label class="sr-only" for="portfolio-ask-input">Ask me anything about my work</label>
+    <input id="portfolio-ask-input" type="search" autocomplete="off" maxlength="300" placeholder="Ask me anything about my work" aria-controls="portfolio-ask-suggestions" aria-expanded="false">
+    <button type="submit" aria-label="Ask the portfolio"><span aria-hidden="true">↗</span></button>
+  </form>
+  <div class="portfolio-ask-suggestions" id="portfolio-ask-suggestions" role="listbox" aria-label="Suggested questions" hidden>
+    <span class="portfolio-ask-suggestions-label">Suggested questions</span>
+    <button type="button" role="option" data-ask-question="What are your strongest projects?">What are your strongest projects?</button>
+    <button type="button" role="option" data-ask-question="What is your design process?">What is your design process?</button>
+    <button type="button" role="option" data-ask-question="What impact have your designs had?">What impact have your designs had?</button>
+    <button type="button" role="option" data-ask-question="Tell me about your work on Kriyam.ai.">Tell me about your work on Kriyam.ai.</button>
+    <button type="button" role="option" data-ask-question="What skills do you bring to a team?">What skills do you bring to a team?</button>
+    <button type="button" role="option" data-ask-question="What tools do you use?">What tools do you use?</button>
+  </div>
+</div>
 <div class="portfolio-chat-layer" id="portfolio-chat-layer" hidden>
   <button class="portfolio-chat-backdrop" type="button" aria-label="Close portfolio conversation"></button>
   <aside class="portfolio-chat-panel" role="dialog" aria-modal="true" aria-labelledby="portfolio-chat-title">

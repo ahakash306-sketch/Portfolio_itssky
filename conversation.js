@@ -410,7 +410,17 @@
     }
 
     const followUpIds = suggestedTopics || topic.followUps || [];
-    const validFollowUps = followUpIds.map(id => typeof id === 'string' ? topicMap.get(id) : id).filter(Boolean).slice(0, topic.followUpLimit || 4);
+    const seenFollowUps = new Set();
+    const validFollowUps = followUpIds
+      .map(id => typeof id === 'string' ? topicMap.get(id) : id)
+      .filter(item => {
+        if (!item) return false;
+        const key = item.id || normalize(item.question || item.shortLabel || '');
+        if (seenFollowUps.has(key)) return false;
+        seenFollowUps.add(key);
+        return true;
+      })
+      .slice(0, topic.followUpLimit || 4);
     if (validFollowUps.length) {
       const section = make('div', null, 'followup-section');
       section.append(make('p', 'Want to dig deeper?', 'response-label'));
@@ -448,6 +458,19 @@
     }
   }
 
+  function showLoading() {
+    startConversation();
+    conversation.replaceChildren();
+    const loading = make('div', null, 'answer-loading');
+    loading.setAttribute('role', 'status');
+    loading.append(make('span', 'Thinking about that…', 'answer-loading-label'));
+    const dots = make('span', null, 'answer-loading-dots');
+    dots.append(make('i'), make('i'), make('i'));
+    loading.append(dots);
+    conversation.append(loading);
+    announcement.textContent = 'Thinking about that…';
+  }
+
   function addTurn(question, topic, suggestedTopics) {
     startConversation();
     const turn = make('section', null, 'turn');
@@ -466,6 +489,7 @@
   function askTopic(id, options = {}) {
     const topic = topicMap.get(id);
     if (!topic) return;
+    showLoading();
     const responseTopic = options.followUp
       ? Object.assign({}, topic, { links: [], followUpLimit: Math.min(topic.followUpLimit || 4, 4) })
       : topic;
@@ -474,6 +498,7 @@
   }
 
   function askText(question) {
+    showLoading();
     const topic = detectTopic(question);
     if (topic) {
       addTurn(question, topic);
@@ -512,6 +537,14 @@
     input.focus();
   });
 
+  window.addEventListener('message', event => {
+    if (event.origin !== location.origin || event.data?.type !== 'portfolio-chat-question') return;
+    const question = String(event.data.question || '').trim();
+    if (!question) return;
+    askText(question);
+    input.focus();
+  });
+
   input.addEventListener('keydown', event => {
     if (event.key !== 'Enter' || event.shiftKey || event.isComposing) return;
     event.preventDefault();
@@ -532,6 +565,11 @@
     document.addEventListener('keydown', event => {
       if (event.key === 'Escape') window.parent.postMessage({ type: 'portfolio-chat-close' }, location.origin);
     });
+  }
+
+  const initialQuestion = new URLSearchParams(location.search).get('question');
+  if (document.documentElement.classList.contains('embedded') && initialQuestion) {
+    window.requestAnimationFrame(() => askText(initialQuestion));
   }
 
   reset.addEventListener('click', () => {

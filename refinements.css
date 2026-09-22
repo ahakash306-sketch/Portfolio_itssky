@@ -107,6 +107,146 @@ html.portfolio-chat-open,body.portfolio-chat-open{overflow:hidden!important;heig
  .portfolio-chat-backdrop,.portfolio-chat-panel{transition:none}
 }
 
+/* Persistent ask-the-portfolio composer. */
+.portfolio-ask-dock {
+  position: fixed;
+  z-index: 75;
+  left: 50%;
+  bottom: max(20px, env(safe-area-inset-bottom));
+  width: min(520px, calc(100vw - 32px));
+  transform: translateX(-50%);
+  isolation: isolate;
+  transition: transform .28s ease, opacity .2s ease;
+}
+.portfolio-ask-dock .sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+.portfolio-ask-form {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 58px;
+  padding: 7px 8px 7px 16px;
+  border: 1px solid rgba(242,240,237,.25);
+  border-radius: 999px;
+  background: linear-gradient(135deg, rgba(10,12,13,.92), rgba(8,10,11,.84) 42%, rgba(20,31,24,.86));
+  box-shadow: 0 22px 70px rgba(0,0,0,.42), inset 0 1px 0 rgba(255,255,255,.18), inset 0 -1px 0 rgba(255,255,255,.035);
+  -webkit-backdrop-filter: blur(28px) saturate(155%);
+  backdrop-filter: blur(28px) saturate(155%);
+  transition: border-color .3s ease, box-shadow .3s ease, background .3s ease;
+}
+.portfolio-ask-form::before {
+  position: absolute;
+  inset: 0;
+  content: '';
+  pointer-events: none;
+  background: linear-gradient(108deg, transparent 12%, rgba(255,255,255,.08) 48%, transparent 82%);
+  opacity: .55;
+}
+.portfolio-ask-form > * { position: relative; z-index: 1; }
+.portfolio-ask-dock[data-open="true"] .portfolio-ask-form,
+.portfolio-ask-form:focus-within {
+  border-color: rgba(220,231,215,.58);
+  background: linear-gradient(135deg, rgba(14,17,18,.96), rgba(10,13,14,.91) 42%, rgba(24,38,28,.92));
+  box-shadow: 0 25px 76px rgba(0,0,0,.5), 0 0 0 4px rgba(220,231,215,.07), inset 0 1px 0 rgba(255,255,255,.22), inset 0 -1px 0 rgba(255,255,255,.04);
+}
+.portfolio-ask-mark {
+  flex: none;
+  color: #cfe2c7;
+  font-size: 17px;
+  line-height: 1;
+}
+.portfolio-ask-form input {
+  min-width: 0;
+  flex: 1;
+  height: 42px;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #f2f0ed;
+  font: 400 14px/1.3 'Google Sans Flex', system-ui, sans-serif;
+}
+.portfolio-ask-form input::placeholder { color: rgba(242,240,237,.58); }
+.portfolio-ask-form button {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(220,231,215,.5);
+  border-radius: 999px;
+  background: #dce7d7;
+  color: #172018;
+  font: 500 21px/1 'Google Sans Flex', system-ui, sans-serif;
+  cursor: pointer;
+  transition: transform .2s ease, background .2s ease;
+}
+.portfolio-ask-form button:hover { transform: translateY(-1px); background: #bcd1b2; }
+.portfolio-ask-suggestions {
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + 12px);
+  left: 0;
+  display: grid;
+  gap: 3px;
+  margin: 0 12px;
+  padding: 9px;
+  border: 1px solid rgba(242,240,237,.24);
+  border-radius: 18px;
+  background: linear-gradient(145deg, rgba(10,12,13,.95), rgba(8,10,11,.89) 48%, rgba(20,31,24,.9));
+  box-shadow: 0 24px 70px rgba(0,0,0,.46), inset 0 1px 0 rgba(255,255,255,.16), inset 0 -1px 0 rgba(255,255,255,.035);
+  -webkit-backdrop-filter: blur(30px) saturate(160%);
+  backdrop-filter: blur(30px) saturate(160%);
+  animation: portfolioAskReveal .34s cubic-bezier(.2,.8,.2,1) both;
+}
+.portfolio-ask-suggestions[hidden] { display: none; }
+.portfolio-ask-suggestions-label {
+  padding: 4px 9px 7px;
+  color: rgba(242,240,237,.5);
+  font-size: 9px;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+}
+.portfolio-ask-suggestions button {
+  width: 100%;
+  min-height: 38px;
+  padding: 8px 9px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: rgba(242,240,237,.78);
+  font: 400 12px/1.35 'Google Sans Flex', system-ui, sans-serif;
+  text-align: left;
+  cursor: pointer;
+  transition: background .2s ease, color .2s ease;
+}
+.portfolio-ask-suggestions button:hover,
+.portfolio-ask-suggestions button:focus-visible { background: rgba(255,255,255,.09); color: #fff; }
+@keyframes portfolioAskReveal {
+  from { opacity: 0; transform: translateY(14px) scale(.96); filter: blur(5px); }
+  to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+}
+@media (max-width: 600px) {
+  .portfolio-ask-dock { bottom: max(12px, env(safe-area-inset-bottom)); width: calc(100vw - 24px); }
+  .portfolio-ask-form { min-height: 54px; padding-left: 14px; }
+  .portfolio-ask-form input { font-size: 13px; }
+  .portfolio-ask-suggestions { margin-inline: 6px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .portfolio-ask-dock, .portfolio-ask-suggestions { transition: none; animation: none; }
+}
+
 /* Compact sticky identity appears after leaving the landing viewport. */
 html .shell > header { margin: 14px auto 0; width: calc(100% - 20px); padding: 9px 14px !important; border: 0 !important; border-radius: 999px; background: rgba(20,22,23,.78) !important; box-shadow: 0 14px 34px rgba(0,0,0,.2), inset 0 1px 0 rgba(255,255,255,.12); transition: padding .28s ease, background .28s ease, border-color .28s ease, box-shadow .28s ease, margin .28s ease; }
 html .shell > header[data-hidden="true"] { transform: translateY(calc(-100% - 24px)); opacity: .02; pointer-events: none; }
@@ -132,3 +272,66 @@ html .shell > header .scroll-brand { opacity: 1; transform: translateY(-50%) sca
 html .shell > header .scroll-brand { display: none; }
 html .shell > header { margin-top: 10px !important; }
 html .shell > header { top: 10px !important; }
+
+/* The conversation now lives as a compact response card above the composer. */
+:root {
+  --portfolio-ask-width: min(520px, calc(100vw - 32px));
+  --portfolio-ask-collapsed-width: min(360px, calc(100vw - 32px));
+  --portfolio-ask-bottom: max(20px, env(safe-area-inset-bottom));
+}
+html .shell > header .conversation-return,
+html .shell > header > .mobile-conversation-return { display: none !important; }
+.portfolio-ask-dock { width: var(--portfolio-ask-collapsed-width); bottom: var(--portfolio-ask-bottom); transition: width .36s cubic-bezier(.2,.8,.2,1), transform .28s ease, opacity .2s ease; }
+.portfolio-ask-dock[data-expanded="true"] { width: var(--portfolio-ask-width); }
+.portfolio-ask-dock:not([data-expanded="true"]) .portfolio-ask-form { min-height: 46px; padding-block: 4px; }
+.portfolio-ask-dock:not([data-expanded="true"]) .portfolio-ask-form button { display: none !important; }
+.portfolio-ask-dock[data-expanded="true"] .portfolio-ask-form button,
+.portfolio-ask-dock[data-chat-open="true"] .portfolio-ask-form button { display: grid; }
+.portfolio-chat-layer {
+  position: fixed;
+  inset: auto;
+  left: 50%;
+  bottom: calc(var(--portfolio-ask-bottom) + 72px);
+  width: var(--portfolio-ask-width);
+  height: min(72svh, 640px);
+  display: block;
+  transform: translateX(-50%);
+  pointer-events: none;
+  z-index: 74;
+}
+.portfolio-chat-layer[data-open="true"] { pointer-events: none; }
+.portfolio-chat-backdrop { display: none; }
+.portfolio-chat-panel {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 1px solid rgba(242,240,237,.24);
+  border-radius: 24px;
+  background: linear-gradient(145deg, rgba(10,12,13,.96), rgba(8,10,11,.92) 48%, rgba(20,31,24,.94));
+  box-shadow: 0 28px 90px rgba(0,0,0,.56), inset 0 1px 0 rgba(255,255,255,.17), inset 0 -1px 0 rgba(255,255,255,.035);
+  -webkit-backdrop-filter: blur(32px) saturate(160%);
+  backdrop-filter: blur(32px) saturate(160%);
+  opacity: 0;
+  transform: translateY(24px) scale(.97);
+  transition: opacity .38s cubic-bezier(.2,.8,.2,1), transform .42s cubic-bezier(.2,.8,.2,1);
+}
+.portfolio-chat-layer[data-open="true"] .portfolio-chat-panel { opacity: 1; transform: none; }
+.portfolio-chat-panel { pointer-events: auto; }
+.portfolio-chat-header {
+  min-height: 54px;
+  padding: 9px 12px 9px 18px;
+  border-bottom: 1px solid rgba(242,240,237,.11);
+  background: rgba(0,0,0,.18);
+}
+.portfolio-chat-header strong { font-size: 13px; }
+.portfolio-chat-close { width: 36px !important; height: 36px !important; min-width: 36px; border-radius: 999px; background: rgba(255,255,255,.07); }
+.portfolio-chat-frame { min-height: 0; }
+@media (max-width: 600px) {
+  :root { --portfolio-ask-width: calc(100vw - 24px); --portfolio-ask-collapsed-width: min(300px, calc(100vw - 32px)); --portfolio-ask-bottom: max(12px, env(safe-area-inset-bottom)); }
+  .portfolio-chat-layer { bottom: calc(var(--portfolio-ask-bottom) + 64px); height: min(78svh, 640px); }
+  .portfolio-chat-panel { border-radius: 20px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .portfolio-chat-panel { transition: none; }
+}

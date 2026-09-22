@@ -63,13 +63,42 @@
   const chatFrame = chatLayer && chatLayer.querySelector('.portfolio-chat-frame');
   const chatClose = chatLayer && chatLayer.querySelector('.portfolio-chat-close');
   const chatTriggers = [...document.querySelectorAll('.conversation-return, .mobile-conversation-return')];
+  const askDock = document.getElementById('portfolio-ask-dock');
+  const askForm = document.getElementById('portfolio-ask-form');
+  const askInput = document.getElementById('portfolio-ask-input');
+  const askSuggestions = document.getElementById('portfolio-ask-suggestions');
   let chatReturnFocus = null;
   let chatHideTimer = 0;
   let chatScrollY = 0;
+  let pendingChatQuestion = '';
+
+  const sendChatQuestion = question => {
+    if (!question || !chatFrame?.contentWindow) return;
+    chatFrame.contentWindow.postMessage({ type: 'portfolio-chat-question', question }, location.origin);
+  };
+
+  const closeAskSuggestions = () => {
+    if (!askDock || !askSuggestions || !askInput) return;
+    askDock.dataset.open = 'false';
+    askSuggestions.hidden = true;
+    askInput.setAttribute('aria-expanded', 'false');
+  };
+
+  const openAskSuggestions = () => {
+    if (!askDock || !askSuggestions || !askInput) return;
+    if (chatLayer && !chatLayer.hidden && chatLayer.dataset.open === 'true') return;
+    askDock.dataset.open = 'true';
+    askSuggestions.hidden = false;
+    askInput.setAttribute('aria-expanded', 'true');
+  };
 
   const closeChat = () => {
     if (!chatLayer || chatLayer.hidden) return;
     chatLayer.dataset.open = 'false';
+    if (askDock) {
+      askDock.dataset.chatOpen = 'false';
+      askDock.dataset.expanded = 'false';
+    }
   document.body.classList.remove('portfolio-chat-open');
   document.documentElement.classList.remove('portfolio-chat-open');
   chatBackground.forEach(el => { el.inert = false; });
@@ -77,16 +106,29 @@
     chatHideTimer = window.setTimeout(() => {
       chatLayer.hidden = true;
       window.scrollTo(0, chatScrollY);
-      if (chatReturnFocus && document.contains(chatReturnFocus)) chatReturnFocus.focus({ preventScroll: true });
+      if (chatReturnFocus && document.contains(chatReturnFocus) && typeof chatReturnFocus.focus === 'function') chatReturnFocus.focus({ preventScroll: true });
     }, matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 360);
   };
 
-  const openChat = trigger => {
+  const openChat = (trigger, question = '') => {
     if (!chatLayer || !chatFrame) return;
     clearTimeout(chatHideTimer);
+    closeAskSuggestions();
+    if (askDock) {
+      askDock.dataset.chatOpen = 'true';
+      askDock.dataset.expanded = 'true';
+    }
     chatReturnFocus = trigger || document.activeElement;
     chatScrollY = window.scrollY;
-    if (!chatFrame.src) chatFrame.src = chatFrame.dataset.src;
+    pendingChatQuestion = question;
+    if (!chatFrame.src) {
+      const source = new URL(chatFrame.dataset.src, location.href);
+      if (question) {
+        source.searchParams.set('question', question);
+        pendingChatQuestion = '';
+      }
+      chatFrame.src = source.href;
+    }
     chatLayer.hidden = false;
   document.body.classList.remove('portfolio-chat-open');
   document.documentElement.classList.remove('portfolio-chat-open');
@@ -94,6 +136,12 @@
     requestAnimationFrame(() => {
       chatLayer.dataset.open = 'true';
       if (chatClose) chatClose.focus({ preventScroll: true });
+      if (pendingChatQuestion && chatFrame.src) {
+        window.setTimeout(() => {
+          sendChatQuestion(pendingChatQuestion);
+          pendingChatQuestion = '';
+        }, 80);
+      }
       window.scrollTo(0, chatScrollY);
     });
     requestAnimationFrame(() => window.scrollTo(0, chatScrollY));
@@ -114,7 +162,13 @@
     if (!trigger) return;
     chatScrollY = window.scrollY;
   }, true);
-  if (chatFrame) chatFrame.addEventListener('load', () => window.scrollTo(0, chatScrollY));
+  if (chatFrame) chatFrame.addEventListener('load', () => {
+    window.scrollTo(0, chatScrollY);
+    if (pendingChatQuestion) {
+      sendChatQuestion(pendingChatQuestion);
+      pendingChatQuestion = '';
+    }
+  });
   if (chatLayer) chatLayer.addEventListener('click', event => {
     if (event.target.closest('.portfolio-chat-close, .portfolio-chat-backdrop')) closeChat();
   });
@@ -139,6 +193,41 @@
   window.addEventListener('message', event => {
     if (event.source === chatFrame?.contentWindow && event.data?.type === 'portfolio-chat-close') closeChat();
   });
+
+  if (askForm && askInput && askSuggestions) {
+    askForm.addEventListener('click', openAskSuggestions);
+    askForm.addEventListener('submit', event => {
+      event.preventDefault();
+      const question = askInput.value.trim();
+      if (!question) {
+        openAskSuggestions();
+        return;
+      }
+      closeAskSuggestions();
+      openChat(askDock, question);
+      askInput.value = '';
+    });
+    askSuggestions.addEventListener('click', event => {
+      const button = event.target.closest('[data-ask-question]');
+      if (!button) return;
+      const question = button.dataset.askQuestion || '';
+      closeAskSuggestions();
+      openChat(askDock, question);
+    });
+    document.addEventListener('pointerdown', event => {
+      if (!event.target.closest('#portfolio-ask-dock')) {
+        closeAskSuggestions();
+        if (!chatLayer || chatLayer.hidden || chatLayer.dataset.open !== 'true') askDock.dataset.expanded = 'false';
+      }
+    });
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape' && askDock?.dataset.open === 'true') {
+        closeAskSuggestions();
+        if (!chatLayer || chatLayer.hidden || chatLayer.dataset.open !== 'true') askDock.dataset.expanded = 'false';
+        askInput.blur();
+      }
+    });
+  }
 
   let pending = false;
   const update = () => {

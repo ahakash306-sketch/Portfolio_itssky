@@ -579,3 +579,41 @@ html.embedded .started main{padding-top:28px}
 html.embedded,html.embedded body{background:transparent!important}
 html.embedded .started .entry{background:linear-gradient(transparent,rgba(13,19,23,.92) 30%);border-radius:16px 16px 0 0}
 html.embedded[data-theme="light"] body{background:rgba(242,246,243,.94)!important}
+html.embedded[data-initial-question] #welcome{display:none!important}
+html.embedded[data-initial-question] body:not(.started) .entry{visibility:hidden}
+html.embedded .entry{display:none!important}
+
+/* Homepage response card: compact type and a two-up evidence carousel. */
+html.embedded .answer p,
+html.embedded .answer li,
+html.embedded .answer .evidence-claim,
+html.embedded .answer .project p{font-size:14px;line-height:1.6}
+html.embedded .answer>.short-answer{font-size:14px!important;line-height:1.6!important}
+html.embedded .started .cards{
+  display:grid;
+  grid-auto-flow:column;
+  grid-template-columns:none;
+  grid-auto-columns:calc((100% - 18px)/2);
+  grid-template-rows:minmax(250px,1fr);
+  gap:12px;
+  margin:0;
+  padding:2px 0 12px;
+  overflow-x:auto;
+  overflow-y:hidden;
+  scrollbar-width:thin;
+  scroll-snap-type:x mandatory;
+}
+html.embedded .started .cards>*{width:100%;min-width:0;height:100%;margin:0;scroll-snap-align:start}
+html.embedded .started .cards .project{min-height:250px;height:100%}
+html.embedded .started .cards .project img{aspect-ratio:1.55}
+html.embedded .started .cards .project[href]:hover{transform:none;box-shadow:0 18px 42px #0005}
+html.embedded .answer>.short-answer{font-weight:350!important}
+.answer-loading{display:inline-flex;align-items:center;gap:10px;margin:8px 0 18px;padding:10px 13px;border:1px solid rgba(242,240,237,.14);border-radius:999px;background:rgba(255,255,255,.055);color:#aeb6ac;font-size:12px;line-height:1.2;box-shadow:0 10px 26px #0003;animation:answerLoadingIn .2s ease both}
+.answer-loading-dots{display:inline-flex;align-items:center;gap:3px}
+.answer-loading-dots i{display:block;width:4px;height:4px;border-radius:50%;background:#b8cbaa;animation:answerLoadingPulse 1s ease-in-out infinite}
+.answer-loading-dots i:nth-child(2){animation-delay:.14s}.answer-loading-dots i:nth-child(3){animation-delay:.28s}
+@keyframes answerLoadingIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+@keyframes answerLoadingPulse{0%,60%,100%{opacity:.3;transform:translateY(0)}30%{opacity:1;transform:translateY(-2px)}}
+@media(max-width:600px){
+ html.embedded .started .cards{grid-auto-columns:74%;grid-template-rows:minmax(250px,1fr)}
+}
