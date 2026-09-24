@@ -458,28 +458,45 @@
     }
   }
 
+  let answerTimer = 0;
+  let unmountOrb = () => {};
   function showLoading() {
+    unmountOrb();
     startConversation();
-    conversation.replaceChildren();
+    conversation.querySelector('.answer-loading')?.remove();
     const loading = make('div', null, 'answer-loading');
     loading.setAttribute('role', 'status');
-    loading.append(make('span', 'Thinking about that…', 'answer-loading-label'));
-    const dots = make('span', null, 'answer-loading-dots');
-    dots.append(make('i'), make('i'), make('i'));
-    loading.append(dots);
+    loading.append(make('span', 'Thinking about that…', 'sr-only'));
+    const sphere = make('div', null, 'answer-loading-sphere');
+    sphere.setAttribute('aria-hidden', 'true');
+    loading.append(sphere);
     conversation.append(loading);
+    unmountOrb = window.mountThinkingOrb(sphere);
+    requestAnimationFrame(() => loading.scrollIntoView({
+      behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+      block: 'start'
+    }));
     announcement.textContent = 'Thinking about that…';
   }
-
   function addTurn(question, topic, suggestedTopics) {
+    clearTimeout(answerTimer);
+    showLoading();
+    answerTimer = window.setTimeout(() => renderTurn(question, topic, suggestedTopics), 2000);
+  }
+
+  function renderTurn(question, topic, suggestedTopics) {
+    unmountOrb();
+    unmountOrb = () => {};
     startConversation();
     const turn = make('section', null, 'turn');
     turn.append(answerComponent(topic, suggestedTopics));
-    conversation.replaceChildren(turn);
+    const loading = conversation.querySelector('.answer-loading');
+    if (loading) loading.replaceWith(turn);
+    else conversation.append(turn);
     announcement.textContent = `Answered: ${question}`;
     requestAnimationFrame(() => {
       const answer = turn.querySelector('.answer');
-      if (shouldScroll(turn)) answer.scrollIntoView({
+      answer.scrollIntoView({
         behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
         block: 'start'
       });
@@ -489,7 +506,6 @@
   function askTopic(id, options = {}) {
     const topic = topicMap.get(id);
     if (!topic) return;
-    showLoading();
     const responseTopic = options.followUp
       ? Object.assign({}, topic, { links: [], followUpLimit: Math.min(topic.followUpLimit || 4, 4) })
       : topic;
@@ -498,7 +514,6 @@
   }
 
   function askText(question) {
-    showLoading();
     const topic = detectTopic(question);
     if (topic) {
       addTurn(question, topic);
@@ -538,7 +553,7 @@
   });
 
   window.addEventListener('message', event => {
-    if (event.origin !== location.origin || event.data?.type !== 'portfolio-chat-question') return;
+    if (event.source !== window.parent || event.origin !== location.origin || event.data?.type !== 'portfolio-chat-question') return;
     const question = String(event.data.question || '').trim();
     if (!question) return;
     askText(question);
@@ -573,6 +588,9 @@
   }
 
   reset.addEventListener('click', () => {
+    clearTimeout(answerTimer);
+    unmountOrb();
+    unmountOrb = () => {};
     conversation.replaceChildren();
     conversation.hidden = true;
     welcome.hidden = false;

@@ -283,6 +283,37 @@ html .shell > header .conversation-return,
 html .shell > header > .mobile-conversation-return { display: none !important; }
 .portfolio-ask-dock { width: var(--portfolio-ask-collapsed-width); bottom: var(--portfolio-ask-bottom); transition: width .36s cubic-bezier(.2,.8,.2,1), transform .28s ease, opacity .2s ease; }
 .portfolio-ask-dock[data-expanded="true"] { width: var(--portfolio-ask-width); }
+/* Colorful border beam for the compact composer; no React runtime required. */
+@property --ask-beam-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+.portfolio-ask-form::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  padding: 1.5px;
+  border-radius: inherit;
+  pointer-events: none;
+  background: conic-gradient(from var(--ask-beam-angle), transparent 0deg 210deg, #658cff 250deg, #c87dff 280deg, #ffad83 305deg, #b5f5df 326deg, transparent 350deg);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  opacity: .7;
+  animation: askBorderBeam 4.5s linear infinite;
+  transition: opacity .25s ease;
+}
+.portfolio-ask-dock[data-expanded="true"] .portfolio-ask-form::after {
+  opacity: 0;
+  animation-play-state: paused;
+}
+@keyframes askBorderBeam { to { --ask-beam-angle: 360deg; } }
+@media (prefers-reduced-motion: reduce) {
+  .portfolio-ask-form::after { animation: none; }
+}
 .portfolio-ask-dock:not([data-expanded="true"]) .portfolio-ask-form { min-height: 46px; padding-block: 4px; }
 .portfolio-ask-dock:not([data-expanded="true"]) .portfolio-ask-form button { display: none !important; }
 .portfolio-ask-dock[data-expanded="true"] .portfolio-ask-form button,

@@ -74,7 +74,7 @@
 
   const sendChatQuestion = question => {
     if (!question || !chatFrame?.contentWindow) return;
-    chatFrame.contentWindow.postMessage({ type: 'portfolio-chat-question', question }, location.origin);
+    chatFrame.contentWindow.postMessage({ type: 'portfolio-chat-question', question }, location.protocol === 'file:' ? '*' : location.origin);
   };
 
   const closeAskSuggestions = () => {
@@ -87,6 +87,7 @@
   const openAskSuggestions = () => {
     if (!askDock || !askSuggestions || !askInput) return;
     if (chatLayer && !chatLayer.hidden && chatLayer.dataset.open === 'true') return;
+    askDock.dataset.expanded = 'true';
     askDock.dataset.open = 'true';
     askSuggestions.hidden = false;
     askInput.setAttribute('aria-expanded', 'true');
@@ -137,10 +138,8 @@
       chatLayer.dataset.open = 'true';
       if (chatClose) chatClose.focus({ preventScroll: true });
       if (pendingChatQuestion && chatFrame.src) {
-        window.setTimeout(() => {
-          sendChatQuestion(pendingChatQuestion);
-          pendingChatQuestion = '';
-        }, 80);
+        sendChatQuestion(pendingChatQuestion);
+        pendingChatQuestion = '';
       }
       window.scrollTo(0, chatScrollY);
     });
